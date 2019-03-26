@@ -1,0 +1,15 @@
+<app-navigation>
+  <h2 id="audioandvideocapture">Audio & Video Capture</h2>
+
+  <video id="video" #video autoplay playsinline></video>
+  <canvas id="canvas" #canvas></canvas>
+
+  <div>
+    <button mat-flat-button color="primary" (click)="startCamera()">Start Camera</button>
+    <button mat-flat-button color="primary" (click)="stopCamera()">Stop Camera</button>
+    <button mat-flat-button color="primary" (click)="savePicture()">Save Picture</button>
+  </div>
+  <div>
+      <button mat-flat-button color="primary" (click)="click()">click</button>
+  </div>
+</app-navigation>

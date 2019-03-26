@@ -1,0 +1,76 @@
+<div class="example-container">
+  <mat-toolbar color="primary" class="example-toolbar">
+    <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+    <h1>WHAT ANGULAR CAN DO TODAY</h1>
+  </mat-toolbar>
+      
+<mat-sidenav-container class="example-sidenav-container">
+
+  <mat-sidenav #snav>
+    <mat-nav-list>
+      <!-- Camera & Microphone -->
+      <h3> Camera & Microphone </h3>
+
+      <a mat-list-item routerLink="/camera-and-microphone" fragment="audioandvideocapture">
+        <mat-icon class="nav-list-icon">
+          camera_alt
+        </mat-icon>
+        Audio & Video Capture 
+      </a>
+
+      <a mat-list-item routerLink="/top">
+        <mat-icon class="nav-list-icon">
+          camera_roll
+        </mat-icon> 
+        Advanced Camera Controls 
+      </a>
+
+      <a mat-list-item routerLink="/top">
+        <mat-icon class="nav-list-icon">
+          mic
+        </mat-icon> 
+        Recording Media 
+      </a>
+
+      <a mat-list-item routerLink="/top">
+        <mat-icon class="nav-list-icon">
+          videocam
+        </mat-icon> 
+        Real-time Communication 
+      </a>
+
+      <!-- Location & Position -->
+      <h3> Location & Position </h3>
+
+      <a mat-list-item routerLink="/top">
+        <mat-icon class="nav-list-icon">
+          gps_fixed
+        </mat-icon>
+        Geolocation 
+      </a>
+
+
+      <!-- Another -->
+      <h3> QR Code </h3>
+
+      <a mat-list-item routerLink="/top">
+        <mat-icon class="nav-list-icon">
+            crop_free
+        </mat-icon>
+        QR Code 
+      </a>
+
+      <a mat-list-item routerLink="/top">
+        <mat-icon class="nav-list-icon" svgIcon="firebase">
+        </mat-icon>
+        Firebase 
+      </a>
+
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <ng-content></ng-content>
+
+</mat-sidenav-container>
+
+</div>
