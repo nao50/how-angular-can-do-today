@@ -1,0 +1,20 @@
+<app-navigation>
+  <div fxLayout="row wrap" fxLayoutAlign="center center">
+    <div class="card" fxFlex="60" fxFlex.lg="60" fxFlex.md="60" fxFlex.sm="100" fxFlex.xs="100">
+      <mat-card>
+        <mat-card-content>
+          <div fxLayout="row wrap">
+            <div class="map-row" fxFlex="100">
+              <div class="map" id="map" style="width: 100%; height: 532.2px;"></div>
+            </div>
+            <div fxFlex="100" fxLayoutAlign="center center">
+              <button mat-raised-button class="button-row" color="primary" [disabled]="loading || initDone" (click)="setMap()">Init</button>
+              <button mat-raised-button class="button-row" color="primary" [disabled]="loading || start || !initDone" (click)="subscribeGeolocation()">Start</button>
+              <button mat-raised-button class="button-row" color="primary" [disabled]="loading || !start || !initDone" (click)="unsubscribeGeolocation()">Stop</button>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</app-navigation>

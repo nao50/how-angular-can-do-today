@@ -24,7 +24,10 @@ export class CameraAndMicrophoneComponent implements OnInit {
   videoDevices: MediaDeviceInfo[] = [];
   audioDevices: MediaDeviceInfo[] = [];
 
-  medias: MediaStreamConstraints = {};
+  medias: MediaStreamConstraints = {
+    audio: true,
+    video: true,
+  };
 
   mediaDeviceFormGroup = this.formBuilder.group({
     videoDevice: ['', Validators.required],
@@ -119,16 +122,18 @@ export class CameraAndMicrophoneComponent implements OnInit {
 
 
   startMedia() {
-    if (this.medias.video) {
-      this.videoStart = true;
-    } else {
-      this.videoStart = false;
-    }
-    if (this.medias.audio) {
-      this.audioStart = true;
-    } else {
-      this.audioStart = false;
-    }
+    this.videoStart = this.medias.video ? true : false;
+    this.audioStart = this.medias.audio ? true : false;
+    // if (this.medias.video) {
+    //   this.videoStart = true;
+    // } else {
+    //   this.videoStart = false;
+    // }
+    // if (this.medias.audio) {
+    //   this.audioStart = true;
+    // } else {
+    //   this.audioStart = false;
+    // }
 
     navigator.mediaDevices.getUserMedia(this.medias).then(
       (localStream: MediaStream) => {

@@ -33,12 +33,12 @@ export class AppComponent implements AfterViewInit {
 
     console.log('online', window.navigator.onLine);
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
-        this.location = position.coords;
-        console.log('position', position.coords);
-      });
-   }
+    // if (navigator.geolocation) {
+    //   navigator.geolocation.getCurrentPosition(position => {
+    //     this.location = position.coords;
+    //     console.log('position', position.coords);
+    //   });
+    // }
   }
 
   onClick() {

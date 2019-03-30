@@ -25,11 +25,17 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/leaflet/dist/images",
+                "output": "src/assets/"
+              },
               "src/manifest.webmanifest"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.scss"
+              "src/styles.scss",
+              "./node_modules/leaflet/dist/leaflet.css"
             ],
             "scripts": []
           },
@@ -87,12 +93,18 @@
             "karmaConfig": "src/karma.conf.js",
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.scss"
+              "src/styles.scss",
+              "./node_modules/leaflet/dist/leaflet.css"
             ],
             "scripts": [],
             "assets": [
               "src/favicon.ico",
               "src/assets",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/leaflet/dist/images",
+                "output": "src/assets/"
+              },
               "src/manifest.webmanifest"
             ]
           }
