@@ -8,6 +8,7 @@ import { environment } from '../environments/environment';
 import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // material
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -16,6 +17,11 @@ import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSelectModule } from '@angular/material/select';
+import { MatMenuModule } from '@angular/material/menu';
 
 // component
 import { CameraAndMicrophoneComponent } from './camera-and-microphone/camera-and-microphone.component';
@@ -40,13 +46,20 @@ import { TopComponent } from './top/top.component';
     BrowserAnimationsModule,
     FlexLayoutModule,
     HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
     // material
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
     MatButtonModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatAutocompleteModule,
+    MatSelectModule,
+    MatMenuModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

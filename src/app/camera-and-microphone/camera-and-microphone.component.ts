@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-camera-and-microphone',
@@ -14,67 +15,148 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Renderer2 } fr
 // 1. （追加）マイクの入力をヒストグラム化する
 // 1. 写真をとり、ファイルをダウンロードする
 // 1. 録画し、ファイルをダウンロードする
-export class CameraAndMicrophoneComponent implements OnInit, AfterViewInit {
+export class CameraAndMicrophoneComponent implements OnInit {
   @ViewChild('video') videoElm: ElementRef;
   @ViewChild('canvas') canvasElm: ElementRef;
+  // Default video & audio are OFF
+  videoStart = false;
+  audioStart = false;
+  videoDevices: MediaDeviceInfo[] = [];
+  audioDevices: MediaDeviceInfo[] = [];
 
-  private captureData: string;
-  private medias: MediaStreamConstraints = {
-    audio: true,
-    video: {
-      facingMode: 'user',
-    }
-  };
+  medias: MediaStreamConstraints = {};
+
+  mediaDeviceFormGroup = this.formBuilder.group({
+    videoDevice: ['', Validators.required],
+    audioDevice: ['', Validators.required],
+  });
+  get videoDevice() { return this.mediaDeviceFormGroup.get('videoDevice'); }
+  get audioDevice() { return this.mediaDeviceFormGroup.get('audioDevice'); }
+
 
   constructor(
     private renderer: Renderer2,
+    private formBuilder: FormBuilder,
   ) { }
 
   ngOnInit() {
+    this.getMediaDevicesInfo();
+    this.subscribeMediaDevice();
   }
 
-  ngAfterViewInit() {
-    // this.startCamera();
+  getMediaDevicesInfo() {
+    navigator.mediaDevices.enumerateDevices().then(
+      devices => {
+        devices.forEach(device => {
+          if (device['kind'] === 'videoinput') {
+            this.videoDevices.push(device);
+          } else if (device['kind'] === 'audioinput') {
+            this.audioDevices.push(device);
+          }
+          // console.log(device);
+        });
+      }
+    ).catch(
+      err => {
+        console.error('enumerateDevide ERROR:', err);
+      });
   }
 
-  click() {
-    if (this.videoElm.nativeElement.srcObject) {
-      if (this.videoElm.nativeElement.srcObject.getVideoTracks()[0].enabled === true) {
-        // this.videoElm.nativeElement.srcObject.getVideoTracks()[0].enabled = false;
-        // this.videoElm.nativeElement.srcObject.getAudioTracks()[0].enabled = false;
-        this.videoElm.nativeElement.srcObject.getVideoTracks()[0].stop();
-        this.videoElm.nativeElement.srcObject.getAudioTracks()[0].stop();
+  subscribeMediaDevice() {
+    this.mediaDeviceFormGroup.valueChanges.subscribe(
+      (value) => {
+        if (value.videoDevice && value.audioDevice) {
+          this.medias = {
+            video: {deviceId: { exact: value.videoDevice.deviceId }},
+            audio: {deviceId: { exact: value.audioDevice.deviceId }}
+          };
+        } else if (value.videoDevice && !value.audioDevice) {
+          this.medias = {
+            video: {deviceId: { exact: value.videoDevice.deviceId }},
+            audio: false
+          };
+        } else if (!value.videoDevice && value.audioDevice) {
+          this.medias = {
+            video: false,
+            audio: {deviceId: { exact: value.audioDevice.deviceId }}
+          };
+        } else if (!value.videoDevice && !value.audioDevice) {
+          this.medias = {
+            video: false,
+            audio: false
+          };
+        }
+        // console.log('subscribeMediaDevice: ', this.medias);
+      }
+    );
+
+  }
+
+  toggleVideoMedia() {
+    if (!this.videoElm.nativeElement.srcObject) {
+      this.startMedia();
+    } else {
+      if (!this.videoElm.nativeElement.srcObject.active) {
+        this.startMedia();
       } else {
-        this.videoElm.nativeElement.srcObject.getVideoTracks()[0].enabled = true;
-        this.videoElm.nativeElement.srcObject.getAudioTracks()[0].enabled = true;
+        this.stopVideo();
       }
     }
-    console.log('click this.medias: ', this.medias);
   }
 
-  startCamera() {
-    // this.medias = {
-    //   audio: true,
-    //   video: {
-    //     facingMode: 'user',
-    //   }
-    // };
+  toggleAudioMedia() {
+    if (!this.videoElm.nativeElement.srcObject) {
+      this.startMedia();
+    } else if (this.videoElm.nativeElement.srcObject) {
+      // if (this.videoElm.nativeElement.srcObject.getAudioTracks()[0].enabled === true) {
+      if (this.videoElm.nativeElement.srcObject.getAudioTracks()[0]) {
+        this.stopAudio();
+      } else {
+        this.startMedia();
+      }
+    }
+  }
 
-    window.navigator.mediaDevices.getUserMedia(this.medias)
-      .then(stream => this.videoElm.nativeElement.srcObject = stream)
-      .catch(error => {
+
+  startMedia() {
+    if (this.medias.video) {
+      this.videoStart = true;
+    } else {
+      this.videoStart = false;
+    }
+    if (this.medias.audio) {
+      this.audioStart = true;
+    } else {
+      this.audioStart = false;
+    }
+
+    navigator.mediaDevices.getUserMedia(this.medias).then(
+      (localStream: MediaStream) => {
+        this.videoElm.nativeElement.srcObject = localStream;
+      }
+    ).catch(
+      error => {
         console.error(error);
-      });
-
-    console.log('startCamera this.medias: ', this.medias);
-    // console.log('this.videoElm.nativeElement.srcObject.getTracks()', this.videoElm.nativeElement.srcObject.getTracks().length);
+      }
+    );
   }
 
-  stopCamera() {
-    // this.videoElm.nativeElement.pause();
-    const track = this.videoElm.nativeElement.srcObject.getTracks()[0] as MediaStreamTrack;
-    track.stop();
+  stopVideo() {
+    this.videoElm.nativeElement.srcObject.getVideoTracks()[0].enabled = false;
+    this.videoElm.nativeElement.srcObject.getVideoTracks()[0].stop();
+    this.videoStart = false;
   }
+
+  stopAudio() {
+    this.videoElm.nativeElement.srcObject.getAudioTracks()[0].enabled = false;
+    this.videoElm.nativeElement.srcObject.getAudioTracks()[0].stop();
+    this.audioStart = false;
+  }
+
+
+
+
+
 
   savePicture() {
     // 写真のサイズを決める
