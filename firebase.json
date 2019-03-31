@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/what-angular-can-do-today",
+    "public": "dist/how-angular-can-do-today",
     "ignore": [
       "firebase.json",
       "**/.*",

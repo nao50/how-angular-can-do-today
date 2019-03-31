@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { TopComponent } from './top/top.component';
 import { CameraAndMicrophoneComponent } from './camera-and-microphone/camera-and-microphone.component';
 import { GeolocationComponent } from './geolocation/geolocation.component';
+import { DevicePositionComponent } from './device-position/device-position.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,10 @@ const routes: Routes = [
   {
     path: 'geolocation',
     component: GeolocationComponent,
+  },
+  {
+    path: 'deviceposition',
+    component: DevicePositionComponent,
   },
   {
     path: '**',

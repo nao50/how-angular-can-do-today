@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { GeolocationService } from '../services/geolocation.service';
 import { Observable } from 'rxjs';
 
@@ -23,6 +23,7 @@ export class GeolocationComponent implements OnInit, AfterViewInit {
   locationsSubscription: any;
 
   map: any;
+  @ViewChild('map') mapElm: ElementRef<any>;
 
   constructor(
     private geolocationService: GeolocationService,
@@ -41,6 +42,7 @@ export class GeolocationComponent implements OnInit, AfterViewInit {
     this.loading = true;
     this.locationsSubscription = this.geolocationService.createWatchPosition().subscribe(
       (value: Position) => {
+        // console.log('geolocationService value', value);
         this.geoLocation.lat = value.coords.latitude;
         this.geoLocation.lon = value.coords.longitude;
         this.geoLocation.timestamp = value.timestamp;
@@ -54,7 +56,7 @@ export class GeolocationComponent implements OnInit, AfterViewInit {
       }
     );
     if (this.map) {
-      this.map.panTo([43.062638, 141.353921]);
+      // this.map.panTo([43.062638, 141.353921]);
       this.start = true;
     }
   }
@@ -80,20 +82,23 @@ export class GeolocationComponent implements OnInit, AfterViewInit {
       '<b>Hello!!</b><br>Today is ' + (now.getMonth() + 1) + '/' + now.getDate()
     ).addTo(this.map);
 
-    L.circle(
-      [this.geoLocation.lat, this.geoLocation.lon],
-      { color: 'red', fillColor: '#f03', fillOpacity: 0.5, radius: 500}
-    ).addTo(this.map);
+    // L.circle(
+    //   [this.geoLocation.lat, this.geoLocation.lon],
+    //   { color: 'red', fillColor: '#f03', fillOpacity: 0.5, radius: 500}
+    // ).addTo(this.map);
 
-    L.polyline([
-      [34.702495, 135.495961],
-      [34.712525, 135.505991],
-      [34.712545, 135.504991],
-    ], {
-      'color': '#FF0000',
-      'weight': 5,
-      'opacity': 0.6
-    }).addTo(this.map);
+    // L.polyline([
+    //   [34.702495, 135.495961],
+    //   [34.712525, 135.505991],
+    //   [34.712545, 135.504991],
+    // ], {
+    //   'color': '#FF0000',
+    //   'weight': 5,
+    //   'opacity': 0.6
+    // }).addTo(this.map);
+
+    this.map.on('locationfound', this.setMap);
+    this.map.locate({setView: true, watch: true, maxZoom: 14});
 
     this.start = true;
     this.initDone = true;

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "what-angular-can-do-today": {
+    "how-angular-can-do-today": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/what-angular-can-do-today",
+            "outputPath": "dist/how-angular-can-do-today",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -70,18 +70,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "what-angular-can-do-today:build"
+            "browserTarget": "how-angular-can-do-today:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "what-angular-can-do-today:build:production"
+              "browserTarget": "how-angular-can-do-today:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "what-angular-can-do-today:build"
+            "browserTarget": "how-angular-can-do-today:build"
           }
         },
         "test": {
@@ -124,7 +124,7 @@
         "server": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
-            "outputPath": "dist/what-angular-can-do-today-server",
+            "outputPath": "dist/how-angular-can-do-today-server",
             "main": "src/main.server.ts",
             "tsConfig": "src/tsconfig.server.json"
           },
@@ -147,20 +147,20 @@
         "app-shell": {
           "builder": "@angular-devkit/build-angular:app-shell",
           "options": {
-            "browserTarget": "what-angular-can-do-today:build",
-            "serverTarget": "what-angular-can-do-today:server",
+            "browserTarget": "how-angular-can-do-today:build",
+            "serverTarget": "how-angular-can-do-today:server",
             "route": "shell"
           },
           "configurations": {
             "production": {
-              "browserTarget": "what-angular-can-do-today:build:production",
-              "serverTarget": "what-angular-can-do-today:server:production"
+              "browserTarget": "how-angular-can-do-today:build:production",
+              "serverTarget": "how-angular-can-do-today:server:production"
             }
           }
         }
       }
     },
-    "what-angular-can-do-today-e2e": {
+    "how-angular-can-do-today-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -169,11 +169,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "what-angular-can-do-today:serve"
+            "devServerTarget": "how-angular-can-do-today:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "what-angular-can-do-today:serve:production"
+              "devServerTarget": "how-angular-can-do-today:serve:production"
             }
           }
         },
@@ -189,5 +189,5 @@
       }
     }
   },
-  "defaultProject": "what-angular-can-do-today"
+  "defaultProject": "how-angular-can-do-today"
 }

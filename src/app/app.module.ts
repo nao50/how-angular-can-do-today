@@ -47,6 +47,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavigationComponent } from './navigation/navigation.component';
 import { TopComponent } from './top/top.component';
 import { GeolocationComponent } from './geolocation/geolocation.component';
+import { DevicePositionComponent } from './device-position/device-position.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { GeolocationComponent } from './geolocation/geolocation.component';
     DeviceFeaturesComponent,
     NavigationComponent,
     TopComponent,
-    GeolocationComponent
+    GeolocationComponent,
+    DevicePositionComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
