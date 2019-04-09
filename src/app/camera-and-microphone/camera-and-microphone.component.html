@@ -1,5 +1,4 @@
 <app-navigation>
-
     <div fxLayout="row wrap" fxLayoutAlign="center center">
       <div class="card" fxFlex="60" fxFlex.lg="60" fxFlex.md="60" fxFlex.sm="100" fxFlex.xs="100">
         <mat-card>
@@ -9,102 +8,118 @@
                 <video class="video" poster="assets/images/muteVideoBackground.svg" id="video" #video autoplay playsinline></video>
               </div>
               <div fxFlex="100" fxLayoutAlign="space-around center">
+
                 <!-- Choose video media -->
-                <form [formGroup]="mediaDeviceFormGroup">
+                <!-- <form [formGroup]="mediaDeviceFormGroup">
                   <mat-form-field>
                     <mat-label>Choose video input media</mat-label>
                     <mat-select formControlName="videoDevice">
-                      <!-- <mat-option>None</mat-option> -->
+                      <mat-option>None</mat-option>
                       <mat-option *ngFor="let videoDevice of videoDevices" [value]="videoDevice">
                         {{ videoDevice.label }}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
-                </form>
+                </form> -->
 
                 <!-- Video-->
+                <div fxFlex="90" fxFlexOffset="5" fxLayoutAlign="center center">
+
                 <ng-container *ngIf="videoStart">
-                  <button mat-fab (click)="toggleVideoMedia()" [disabled]="videoDevice.errors" color="primary" aria-label="videocam icon-button">
-                    <mat-icon>videocam</mat-icon>
+                  <button mat-fab class="mat-elevation-z1" (click)="toggleVideoMedia()" color="white" aria-label="videocam icon-button">
+                      <mat-icon>videocam</mat-icon>
                   </button>
                 </ng-container>
 
                 <ng-container *ngIf="!videoStart">
-                  <!-- <button mat-fab (click)="toggleVideoMedia()" [disabled]="videoDevice.errors.required" color="primary" aria-label="videocam icon-button"> -->
-                      <button mat-fab (click)="toggleVideoMedia()" [disabled]="videoDevice.errors" color="primary" aria-label="videocam icon-button">
+                  <button mat-fab (click)="toggleVideoMedia()" color="warn" aria-label="videocam icon-button">                  
                     <mat-icon>videocam_off</mat-icon>
                   </button>
                 </ng-container>
 
+                <span class="button-supan"></span>
 
 
                 <!-- Choose audio media -->
-                <form [formGroup]="mediaDeviceFormGroup">
+                <!-- <form [formGroup]="mediaDeviceFormGroup">
                   <mat-form-field>
                     <mat-label>Choose audio input media</mat-label>
                     <mat-select formControlName="audioDevice">
-                      <!-- <mat-option>None</mat-option> -->
+                      <mat-option>None</mat-option>
                       <mat-option *ngFor="let audioDevice of audioDevices" [value]="audioDevice">
                         {{ audioDevice.label }}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
-                </form>
+                </form> -->
 
                 <!-- Audio -->
+
                 <ng-container *ngIf="audioStart">
-                    <button mat-fab (click)="toggleAudioMedia()" [disabled]="audioDevice.errors" color="primary" aria-label="videocam icon-button">
+                  <button mat-fab class="mat-elevation-z1" (click)="toggleAudioMedia()" color="white" aria-label="videocam icon-button">
                       <mat-icon>mic</mat-icon>
-                    </button>
-                  </ng-container>
+                  </button>
+                </ng-container>
+
+                <ng-container *ngIf="!audioStart">
+                  <button mat-fab (click)="toggleAudioMedia()" color="warn" aria-label="audio icon-button">                  
+                    <mat-icon>mic_off</mat-icon>
+                  </button>
+                </ng-container>
+
+
+                <span class="button-supan"></span>
+
+                <!-- Get picture -->
+                <button mat-fab (click)="savePicture()" [disabled]="!videoStart" color="primary" aria-label="videocam icon-button">
+                  <mat-icon>photo_camera</mat-icon>
+                </button>
+
+                <span class="button-supan"></span>
+
+                <!-- Get rec audio -->
+                <button mat-fab [disabled]="!audioStart" color="primary" aria-label="videocam icon-button">
+                  <mat-icon>mic</mat-icon>
+                </button>
+
+                <span class="button-supan"></span>
+
+                <!-- Get rec movie -->
+                <button mat-fab [disabled]="!videoStart || !audioStart" color="primary" aria-label="videocam icon-button">
+                  <mat-icon>videocam</mat-icon>
+                </button>
+                
+                </div>
+
   
-                  <ng-container *ngIf="!audioStart">
-                    <button mat-fab (click)="toggleAudioMedia()" [disabled]="audioDevice.errors" color="primary" aria-label="videocam icon-button">
-                      <mat-icon>mic_off</mat-icon>
-                    </button>
-                  </ng-container>
+
 
 
                   <!-- Menu -->
-                  <!-- <button mat-icon-button [matMenuTriggerFor]="menu">
-                    <mat-icon>more_vert</mat-icon>
-                  </button>
-                  <mat-menu #menu="matMenu">
-                    <button mat-menu-item disabled>
-                      <mat-icon>settings</mat-icon>
-                      <span>Settings</span>
+                  <div fxFlex="5">
+                    <button mat-icon-button [matMenuTriggerFor]="menu">
+                      <mat-icon>more_vert</mat-icon>
                     </button>
-                    <button mat-menu-item disabled>
-                      <mat-icon>videocam</mat-icon>
-                      <span>Quality</span>
-                    </button>
-                  </mat-menu> -->
+                    <mat-menu #menu="matMenu">
+                      <button mat-menu-item disabled>
+                        <mat-icon>settings</mat-icon>
+                        <span>Settings</span>
+                      </button>
+                      <button mat-menu-item disabled>
+                        <mat-icon>videocam</mat-icon>
+                        <span>Quality</span>
+                      </button>
+                    </mat-menu>
+                  </div>
 
               </div>
             </div>
           </mat-card-content>
         </mat-card>
       </div>
-      <!-- <div class="card" fxFlex="40" fxFlex.lg="40" fxFlex.md="40" fxFlex.sm="100" fxFlex.xs="100">
-        <mat-card>
-          <mat-card-content>
-            sss
-          </mat-card-content>
-        </mat-card>
-      </div> -->
     </div>
 
-  <!-- <h2 id="audioandvideocapture">Audio & Video Capture</h2>
+    <!-- <canvas id="canvas" #canvas style="display:none;"></canvas> -->
+    <!-- <canvas id="canvas" #canvas ></canvas> -->
 
-  <video id="video" #video autoplay playsinline></video>
-  <canvas id="canvas" #canvas></canvas> -->
-
-  <!-- <div>
-    <button mat-flat-button color="primary" (click)="startCamera()">Start Camera</button>
-    <button mat-flat-button color="primary" (click)="stopCamera()">Stop Camera</button>
-    <button mat-flat-button color="primary" (click)="savePicture()">Save Picture</button>
-  </div> -->
-  <!-- <div>
-      <button mat-flat-button color="primary" (click)="click()">click</button>
-  </div> -->
 </app-navigation>

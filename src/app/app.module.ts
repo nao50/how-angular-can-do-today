@@ -22,6 +22,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTableModule } from '@angular/material/table';
+import { CdkTableModule } from '@angular/cdk/table';
 
 // 3rd party (leaflet)
 import {icon, Marker} from 'leaflet';
@@ -41,13 +46,16 @@ const iconDefault = icon({
 Marker.prototype.options.icon = iconDefault;
 
 // component
-import { CameraAndMicrophoneComponent } from './camera-and-microphone/camera-and-microphone.component';
+import { CameraAndMicrophoneComponent, SavePictureDialogComponent } from './camera-and-microphone/camera-and-microphone.component';
 import { DeviceFeaturesComponent } from './device-features/device-features.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavigationComponent } from './navigation/navigation.component';
 import { TopComponent } from './top/top.component';
 import { GeolocationComponent } from './geolocation/geolocation.component';
 import { DevicePositionComponent } from './device-position/device-position.component';
+import { BluetoothComponent } from './bluetooth/bluetooth.component';
+import { UsbComponent } from './usb/usb.component';
+
 
 @NgModule({
   declarations: [
@@ -57,7 +65,10 @@ import { DevicePositionComponent } from './device-position/device-position.compo
     NavigationComponent,
     TopComponent,
     GeolocationComponent,
-    DevicePositionComponent
+    DevicePositionComponent,
+    SavePictureDialogComponent,
+    BluetoothComponent,
+    UsbComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -81,6 +92,14 @@ import { DevicePositionComponent } from './device-position/device-position.compo
     MatAutocompleteModule,
     MatSelectModule,
     MatMenuModule,
+    MatTooltipModule,
+    MatDialogModule,
+    MatProgressSpinnerModule,
+    MatTableModule,
+    CdkTableModule,
+  ],
+  entryComponents: [
+    SavePictureDialogComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

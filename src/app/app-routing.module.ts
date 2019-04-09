@@ -6,6 +6,8 @@ import { TopComponent } from './top/top.component';
 import { CameraAndMicrophoneComponent } from './camera-and-microphone/camera-and-microphone.component';
 import { GeolocationComponent } from './geolocation/geolocation.component';
 import { DevicePositionComponent } from './device-position/device-position.component';
+import { BluetoothComponent } from './bluetooth/bluetooth.component';
+import { UsbComponent } from './usb/usb.component';
 
 const routes: Routes = [
   {
@@ -23,6 +25,14 @@ const routes: Routes = [
   {
     path: 'deviceposition',
     component: DevicePositionComponent,
+  },
+  {
+    path: 'bluetooth',
+    component: BluetoothComponent,
+  },
+  {
+    path: 'usb',
+    component: UsbComponent,
   },
   {
     path: '**',

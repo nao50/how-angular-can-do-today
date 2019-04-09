@@ -1,0 +1,25 @@
+<h1 mat-dialog-title>Hi {{data}}</h1>
+
+<div mat-dialog-content fxLayout="row wrap">
+  <div fxFlex="100" fxLayoutAlign="center center">
+    <canvas id="savePictureCanvas" #savePictureCanvas ></canvas>
+  </div>
+</div>
+
+<div mat-dialog-actions fxLayout="row wrap">
+  <!-- <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button> -->
+  
+  <div fxFlex="100" fxLayoutAlign="center center">
+    <button mat-fab (click)="onNoClick()" color="warn" aria-label="delete photo">
+      <mat-icon>delete</mat-icon>
+    </button>
+
+    <span style="margin: 16px 8px;"></span>
+
+    <button mat-fab (click)="savePicture()" color="primary" aria-label="save photo">
+      <mat-icon>save_alt</mat-icon>
+    </button>
+  </div>
+
+</div>
