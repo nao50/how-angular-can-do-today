@@ -174,34 +174,15 @@ export class CameraAndMicrophoneComponent implements OnInit {
 
   stopVideo() {
     this.medias.video = false;
-    // console.log('v0:', this.videoElm.nativeElement.srcObject);
-    // console.log('v1:', this.videoElm.nativeElement.srcObject.getVideoTracks()[0]);
-    // console.log('v2:', this.videoElm.nativeElement.srcObject.getVideoTracks().length);
-    // console.log('v3:', this.videoElm.nativeElement.srcObject.getAudioTracks().length);
-    // this.videoElm.nativeElement.srcObject.getVideoTracks()[0].enabled = false;
-    // this.videoElm.nativeElement.srcObject.getVideoTracks()[0].stop();
-    // console.log('vv0:', this.videoElm.nativeElement.srcObject);
-    // console.log('vv1:', this.videoElm.nativeElement.srcObject.getVideoTracks()[0]);
-    // console.log('vv2:', this.videoElm.nativeElement.srcObject.getVideoTracks().length);
-    // console.log('vv3:', this.videoElm.nativeElement.srcObject.getAudioTracks().length);
-    this.videoElm.nativeElement.pause();
-    const track = this.videoElm.nativeElement.srcObject.getTracks()[0] as MediaStreamTrack;
-    track.stop();
+    this.videoElm.nativeElement.srcObject.getVideoTracks()[0].enabled = false;
+    this.videoElm.nativeElement.srcObject.getVideoTracks()[0].stop();
     this.videoStart = false;
   }
 
   stopAudio() {
     this.medias.audio = false;
-    console.log('a0:', this.videoElm.nativeElement.srcObject);
-    console.log('a1:', this.videoElm.nativeElement.srcObject.getAudioTracks()[0]);
-    console.log('a2:', this.videoElm.nativeElement.srcObject.getAudioTracks().length);
-    console.log('a3:', this.videoElm.nativeElement.srcObject.getVideoTracks().length);
     this.videoElm.nativeElement.srcObject.getAudioTracks()[0].enabled = false;
     this.videoElm.nativeElement.srcObject.getAudioTracks()[0].stop();
-    console.log('aa0:', this.videoElm.nativeElement.srcObject);
-    console.log('aa1:', this.videoElm.nativeElement.srcObject.getAudioTracks()[0]);
-    console.log('aa2:', this.videoElm.nativeElement.srcObject.getAudioTracks().length);
-    console.log('aa3:', this.videoElm.nativeElement.srcObject.getVideoTracks().length);
     this.audioStart = false;
   }
 

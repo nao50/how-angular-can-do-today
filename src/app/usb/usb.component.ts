@@ -12,4 +12,11 @@ export class UsbComponent implements OnInit {
   ngOnInit() {
   }
 
+  getAllDevices() {
+    (navigator as any).usb.requestDevice({'filters': []})
+    .then(device => {
+        console.log(device);
+      })
+      .catch(error => { console.log(error); });
+  }
 }
