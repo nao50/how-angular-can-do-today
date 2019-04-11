@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -44,6 +44,17 @@ const iconDefault = icon({
   shadowSize: [41, 41]
 });
 Marker.prototype.options.icon = iconDefault;
+
+// (sentry)
+import * as Raven from 'raven-js';
+Raven.config('https://6e025b377f3945508dfc2b3ef7ca70d3@sentry.io/1436874').install();
+export class RavenErrorHandler implements ErrorHandler {
+  handleError(err: any): void {
+    if (environment.production) {
+      Raven.captureException(err);
+    }
+  }
+}
 
 // component
 import { CameraAndMicrophoneComponent, SavePictureDialogComponent } from './camera-and-microphone/camera-and-microphone.component';
@@ -101,7 +112,9 @@ import { UsbComponent } from './usb/usb.component';
   entryComponents: [
     SavePictureDialogComponent,
   ],
-  providers: [],
+  providers: [
+    { provide: ErrorHandler, useClass: RavenErrorHandler },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
