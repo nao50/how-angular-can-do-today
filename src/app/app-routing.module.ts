@@ -8,6 +8,10 @@ import { GeolocationComponent } from './geolocation/geolocation.component';
 import { DevicePositionComponent } from './device-position/device-position.component';
 import { BluetoothComponent } from './bluetooth/bluetooth.component';
 import { UsbComponent } from './usb/usb.component';
+import { AudioVisualizationComponent } from './audio-visualization/audio-visualization.component';
+import { FileComponent } from './file/file.component';
+import { FormAndValidationComponent } from './form-and-validation/form-and-validation.component';
+
 
 const routes: Routes = [
   {
@@ -15,8 +19,12 @@ const routes: Routes = [
     component: TopComponent,
   },
   {
-    path: 'camera-and-microphone',
+    path: 'camera-microphone',
     component: CameraAndMicrophoneComponent,
+  },
+  {
+    path: 'audio-visualization',
+    component: AudioVisualizationComponent,
   },
   {
     path: 'geolocation',
@@ -33,6 +41,14 @@ const routes: Routes = [
   {
     path: 'usb',
     component: UsbComponent,
+  },
+  {
+    path: 'file',
+    component: FileComponent,
+  },
+  {
+    path: 'form-validation',
+    component: FormAndValidationComponent,
   },
   {
     path: '**',

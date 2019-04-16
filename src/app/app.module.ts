@@ -27,6 +27,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { CdkTableModule } from '@angular/cdk/table';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 // 3rd party (leaflet)
 import {icon, Marker} from 'leaflet';
@@ -66,6 +67,10 @@ import { GeolocationComponent } from './geolocation/geolocation.component';
 import { DevicePositionComponent } from './device-position/device-position.component';
 import { BluetoothComponent } from './bluetooth/bluetooth.component';
 import { UsbComponent } from './usb/usb.component';
+import { AudioVisualizationComponent } from './audio-visualization/audio-visualization.component';
+import { FileComponent } from './file/file.component';
+import { FileDropDirective } from './directives/file-drop.directive';
+import { FormAndValidationComponent } from './form-and-validation/form-and-validation.component';
 
 
 @NgModule({
@@ -80,6 +85,10 @@ import { UsbComponent } from './usb/usb.component';
     SavePictureDialogComponent,
     BluetoothComponent,
     UsbComponent,
+    AudioVisualizationComponent,
+    FileComponent,
+    FileDropDirective,
+    FormAndValidationComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -108,6 +117,7 @@ import { UsbComponent } from './usb/usb.component';
     MatProgressSpinnerModule,
     MatTableModule,
     CdkTableModule,
+    MatExpansionModule,
   ],
   entryComponents: [
     SavePictureDialogComponent,

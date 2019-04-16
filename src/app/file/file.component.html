@@ -1,0 +1,50 @@
+<app-navigation>
+
+  <div fxLayout="row wrap" fxLayoutAlign="center center">
+    <div class="card" fxFlex="60" fxFlex.lg="60" fxFlex.md="60" fxFlex.sm="100" fxFlex.xs="100">
+      <mat-card>
+        <mat-card-content>
+          <div fxLayout="row wrap">
+            <div fxFlex="100">
+
+                <form class="drop-zone" [formGroup]="fileFormGroup">
+
+                  <div class="icon" fxLayoutAlign="center start">
+                    <mat-icon [inline]="true">
+                        get_app  
+                    </mat-icon>
+                  </div>
+
+                  a<br>
+                  a<br>
+                  a<br>
+                </form>
+                
+                
+
+                
+
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+
+  <input type="file" style="display: none" #fileInput accept="image/*" (change)="onChangeFileInput()" />
+  <button mat-raised-button color="primary" class="file-select-button" (click)="onClickFileInputButton()">
+   <mat-icon>attach_file</mat-icon>
+    ファイルを選択
+  </button>
+  
+  <p class="file-name" *ngIf="!file; else fileName">ファイルが選択されていません</p>
+  <ng-template #fileName>
+    <p class="file-name">{{ file?.name }}</p>
+  </ng-template>
+
+  <div fxLayout="column">
+  <div fxFlex="50px" style="background-color: darkseagreen" fxLayoutAlign="center center" (dragover)="onDragOver($event)" (drop)="onDrop($event)"></div>
+  </div>
+
+</app-navigation>

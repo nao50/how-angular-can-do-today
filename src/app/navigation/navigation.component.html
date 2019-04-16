@@ -1,6 +1,10 @@
 <div class="example-container">
   <mat-toolbar color="primary" class="example-toolbar">
     <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+
+    <a _ngcontent-c0="" href="/">
+      <img _ngcontent-c0="" alt="logo" class="toolbar-logo" height="30" src="../../assets/icons/icon-96x96.png">
+    </a>
     <h1>HOW ANGULAR CAN DO TODAY</h1>
   </mat-toolbar>
       
@@ -11,18 +15,18 @@
       <!-- Camera & Microphone -->
       <h3> Camera & Microphone </h3>
 
-      <a mat-list-item routerLink="/camera-and-microphone" fragment="audioandvideocapture">
+      <a mat-list-item routerLink="/camera-microphone">
         <mat-icon class="nav-list-icon">
           camera_alt
         </mat-icon>
         Audio & Video 
       </a>
 
-      <a mat-list-item routerLink="/top">
+      <a mat-list-item routerLink="/audio-visualization">
         <mat-icon class="nav-list-icon">
           show_chart
         </mat-icon> 
-        Audio　Visualization
+        Audio Visualization
       </a>
 
       <a mat-list-item routerLink="/top">
@@ -66,9 +70,55 @@
         USB 
       </a>
 
+      <!-- Angular -->
+      <h3> Angular </h3>
+
+      <a mat-list-item routerLink="/form-validation">
+        <mat-icon class="nav-list-icon">
+          input
+        </mat-icon>
+        Form & Validation
+      </a>
 
       <!-- Other -->
+      <h3> Google API </h3>
+
+      <a mat-list-item routerLink="/file">
+        <mat-icon class="nav-list-icon">
+          map
+        </mat-icon>
+        Google Map
+      </a>
+
+      <a mat-list-item routerLink="/file">
+        <mat-icon class="nav-list-icon">
+          calendar_today
+        </mat-icon>
+        Google Calendar
+      </a>
+
+      <a mat-list-item routerLink="/file">
+        <mat-icon class="nav-list-icon">
+          photo
+        </mat-icon>
+        Google Photo
+      </a>
+
+      <a mat-list-item routerLink="/top">
+        <mat-icon class="nav-list-icon" svgIcon="firebase">
+        </mat-icon>
+        Firebase 
+      </a>
+      
+      <!-- Other -->
       <h3> Other </h3>
+
+      <a mat-list-item routerLink="/file">
+        <mat-icon class="nav-list-icon">
+          insert_drive_file
+        </mat-icon>
+        File
+      </a>
 
       <a mat-list-item routerLink="/top">
         <mat-icon class="nav-list-icon">
@@ -84,11 +134,6 @@
         QR Code 
       </a>
 
-      <a mat-list-item routerLink="/top">
-        <mat-icon class="nav-list-icon" svgIcon="firebase">
-        </mat-icon>
-        Firebase 
-      </a>
 
     </mat-nav-list>
   </mat-sidenav>
