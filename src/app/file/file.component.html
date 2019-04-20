@@ -1,29 +1,32 @@
 <app-navigation>
 
   <div fxLayout="row wrap" fxLayoutAlign="center center">
-    <div class="card" fxFlex="60" fxFlex.lg="60" fxFlex.md="60" fxFlex.sm="100" fxFlex.xs="100">
-      <mat-card>
+    <div class="upload-card-row" fxFlex="60" fxFlex.lg="60" fxFlex.md="60" fxFlex.sm="100" fxFlex.xs="100">
+      <mat-card class="upload-card">
         <mat-card-content>
           <div fxLayout="row wrap">
             <div fxFlex="100">
 
-                <form class="drop-zone" [formGroup]="fileFormGroup">
+                <form class="drop-zone" [formGroup]="fileFormGroup" appFileDrop (files)="filesDropped($event)">
 
-                  <div class="icon" fxLayoutAlign="center start">
-                    <mat-icon [inline]="true">
-                        get_app  
-                    </mat-icon>
+                  <div fxLayout="column" highlight="4-9" (click)="onClickFileInputButton()">
+
+                    <div fxFlex="150px" class="icon-row" fxLayoutAlign="center center">
+                      <mat-icon [inline]="true">
+                          get_app  
+                      </mat-icon>
+                    </div>
+
+                    <div fxFlex="80px" fxLayoutAlign="center start">
+                      <h2>Click or Drop your file here!</h2>
+                    </div>
+
                   </div>
 
-                  a<br>
-                  a<br>
-                  a<br>
+                  <input type="file" style="display: none" #fileInput accept="image/*" formControlName="file" (change)="onChangeFileInput($event.target.files)" multiple/>
+
                 </form>
                 
-                
-
-                
-
             </div>
           </div>
         </mat-card-content>
@@ -32,19 +35,42 @@
   </div>
 
 
-  <input type="file" style="display: none" #fileInput accept="image/*" (change)="onChangeFileInput()" />
-  <button mat-raised-button color="primary" class="file-select-button" (click)="onClickFileInputButton()">
-   <mat-icon>attach_file</mat-icon>
-    ファイルを選択
-  </button>
-  
-  <p class="file-name" *ngIf="!file; else fileName">ファイルが選択されていません</p>
-  <ng-template #fileName>
-    <p class="file-name">{{ file?.name }}</p>
-  </ng-template>
 
-  <div fxLayout="column">
-  <div fxFlex="50px" style="background-color: darkseagreen" fxLayoutAlign="center center" (dragover)="onDragOver($event)" (drop)="onDrop($event)"></div>
+  <div fxLayout="row wrap" fxLayoutAlign="center center">
+    <div class="preview-header-card-row" fxFlex="60" fxFlex.lg="60" fxFlex.md="60" fxFlex.sm="100" fxFlex.xs="100">
+      <mat-card>
+        <mat-card-content>
+
+            <div fxLayout="column">
+              <div fxFlex="25px">
+                <div fxLayout="row" style="height: 25px">
+                  <div fxFlex="15" fxFlexFill fxLayoutAlign="start center">
+                    Preview
+                  </div>
+                  <div fxFlex="20" fxFlexFill fxLayoutAlign="start center">
+                    Filename
+                  </div>
+                  <div fxFlex="10" fxFlexFill fxLayoutAlign="start center">
+                    Size
+                  </div>
+                  <div fxFlex="30" fxFlexFill fxLayoutAlign="start center">
+                    Discription
+                  </div>
+                  <div fxFlex="30" fxFlexFill fxLayoutAlign="end center">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <div fxLayout="row wrap" fxLayoutAlign="center center">
+    <div class="preview-card-row" fxFlex="60" fxFlex.lg="60" fxFlex.md="60" fxFlex.sm="100" fxFlex.xs="100">
+      <div #preview></div>
+    </div>
   </div>
 
 </app-navigation>

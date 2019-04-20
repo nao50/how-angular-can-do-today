@@ -1,0 +1,41 @@
+<div mat-dialog-title fxLayout="row wrap">
+  <div fxFlex="90" fxFlex.sm="90" fxLayout="row wrap">
+    <h3 class="dialog-title">Upload a file</h3>
+  </div>
+  <div fxLayoutAlign="center center">
+    <button fxFlex="10" mat-icon-button (click)="onNoClick()">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+</div>
+    
+<form [formGroup]="fileFormGroup">
+  <div mat-dialog-content fxLayout="row wrap">
+    <div fxFlex="100" fxFlex.sm="100" fxLayout="row wrap">
+
+      <mat-form-field fxFlex="100" appearance="outline">
+        <mat-label>Add a discription about this file...</mat-label>
+        <textarea matInput placeholder="Add a discription about this file..." formControlName="discription"></textarea>
+      </mat-form-field>
+
+      <div class="image-row" fxFlex="100" fxLayoutAlign="center center">
+        <img *ngIf="data" [src]="data.url" height="300px">
+      </div>
+
+      <mat-form-field class="file-name-row" fxFlex="100" appearance="outline">
+        <mat-label>File name</mat-label>
+        <input matInput placeholder="File name" type="text" formControlName="filename">
+      </mat-form-field>
+
+    </div>
+  </div>
+
+  <div mat-dialog-actions fxLayout="row wrap">  
+    <div fxFlex="100" fxLayoutAlign="center center">
+      <button mat-raised-button color="warn" (click)="onNoClick()">Cancel</button>
+      <span style="margin: 16px 8px;"></span>
+      <button mat-raised-button color="primary" (click)="uploadFile()" autofocus>Upload</button>
+    </div>
+  </div>
+
+</form>

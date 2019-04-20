@@ -1,0 +1,20 @@
+.preview-card {
+    // padding: 10px;
+    margin-top: 6px;
+    transition: all 0.3s;
+}
+  
+.preview-card:hover {
+    -webkit-box-shadow: 0 4px 4px rgba(1,67,163,.24), 0 0 4px rgba(1,67,163,.12), 0 6px 18px rgba(43,133,231,.12);
+    box-shadow: 0 4px 4px rgba(1,67,163,.24), 0 0 4px rgba(1,67,163,.12), 0 6px 18px rgba(43,133,231,.12);
+    -webkit-transform: translate3d(0,-2px,0);
+    transform: translate3d(0,-2px,0);
+}
+
+.preview-button-icon {
+    padding-left: 8px;
+}
+
+.material-icons {
+    font-size: 30px;
+}

@@ -1,4 +1,14 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+
+export interface GainForm {
+  gain: number;
+}
+export interface OscillatorForm {
+  type: string;
+  frequency: number;
+  detune: number;
+}
 
 @Component({
   selector: 'app-audio-visualization',
@@ -6,77 +16,63 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
   styleUrls: ['./audio-visualization.component.scss']
 })
 export class AudioVisualizationComponent implements OnInit {
-  @ViewChild('video') videoElm: ElementRef;
-  @ViewChild('canvas') canvasElm: ElementRef;
-  startRec = false;
-  audioContext = new AudioContext();
-  sourceNode: MediaStreamAudioSourceNode;
-  analyserNode: AnalyserNode;
+  playing = false;
+  types: string[] = ['sine', 'square', 'sawtooth', 'triangle'];
 
-  // bufferSize = 1024;
+  audioctx = new AudioContext();
+  osc = new OscillatorNode(this.audioctx);
+  gain = new GainNode(this.audioctx);
 
-  medias: MediaStreamConstraints = {
-    audio: true,
-    video: false,
-  };
+  oscillatorFormGroup = this.formBuilder.group({
+    type: ['sine', [Validators.required]],
+    frequency: [440, [Validators.required]],
+    detune: [0, [Validators.required]],
+  });
 
-  constructor() { }
+  gainFormGroup = this.formBuilder.group({
+    gain: [0.5, [Validators.required]],
+  });
+
+  formatFrequency(value: number | null) {
+    return value + 'Hz';
+  }
+
+  constructor(
+    private formBuilder: FormBuilder,
+  ) { }
 
   ngOnInit() {
-  }
-
-  startRecording() {
-    navigator.mediaDevices.getUserMedia(this.medias).then(
-      (localStream: MediaStream) => {
-        this.videoElm.nativeElement.srcObject = localStream;
-        // this.canvasElm.nativeElement.srcObject = localStream;
-        this.sourceNode = this.audioContext.createMediaStreamSource(localStream);
-        this.analyserNode = this.audioContext.createAnalyser();
-        this.analyserNode.fftSize = 2048;
-        this.sourceNode.connect(this.analyserNode);
-
-        this.visualize();
-
-        this.startRec = true;
-      }
-    ).catch(
-      error => {
-        console.error(error);
-        this.startRec = false;
+    this.gainFormGroup.valueChanges.subscribe(
+      (value: GainForm) => {
+        console.log('value: GainForm: ', value);
       }
     );
-    // this.startRec = true;
+
+    this.oscillatorFormGroup.valueChanges.subscribe(
+      (value: OscillatorForm) => {
+        console.log('value: GainForm: ', value);
+      }
+    );
   }
 
-  stopRecording() {
-    this.canvasElm.nativeElement.srcObject.getAudioTracks()[0].enabled = false;
-    this.canvasElm.nativeElement.srcObject.getAudioTracks()[0].stop();
-    this.startRec = false;
+  play() {
+    this.playing = true;
+
+    const audioctx = new AudioContext();      // AudioContext を作成
+    const osc = new OscillatorNode(audioctx); // オシレータを作成
+    const gain = new GainNode(audioctx); // ゲインを作成
+
+    osc.type = this.oscillatorFormGroup.value.type;
+    osc.frequency.value = this.oscillatorFormGroup.value.frequency;
+    gain.gain.value = this.gainFormGroup.value.gain;
+
+    osc.connect(gain).connect(audioctx.destination);  // オシレータを出力に接続
+    osc.start();
+
+    osc.stop( audioctx.currentTime + 1 );
   }
 
-  visualize() {
-    const ctx = this.canvasElm.nativeElement.getContext('2d') as CanvasRenderingContext2D;
-    const WIDTH = this.canvasElm.nativeElement.clientWidth;
-    const HEIGHT = this.canvasElm.nativeElement.clientHeight;
-
-    const array = new Uint8Array(this.analyserNode.fftSize);
-    this.analyserNode.getByteTimeDomainData(array);
-    const barWidth = WIDTH / this.analyserNode.fftSize;
-    ctx.fillStyle = 'rgba(0, 0, 0, 1)';
-    ctx.fillRect(0, 0, WIDTH, HEIGHT);
-
-    for (let i = 0; i < this.analyserNode.fftSize; ++i) {
-      // console.log('this.analyserNode: ', this.analyserNode);
-      const value = array[i];
-      const percent = value / 255;
-      const height = HEIGHT * percent;
-      const offset = HEIGHT - height;
-
-      ctx.fillStyle = 'lime';
-      ctx.fillRect(i * barWidth, offset, barWidth, 2);
-    }
-
-    requestAnimationFrame(this.visualize);
+  stop() {
+    this.playing = false;
   }
-
 }

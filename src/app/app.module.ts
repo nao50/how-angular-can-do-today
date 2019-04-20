@@ -28,6 +28,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { CdkTableModule } from '@angular/cdk/table';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSliderModule } from '@angular/material/slider';
 
 // 3rd party (leaflet)
 import {icon, Marker} from 'leaflet';
@@ -68,7 +69,8 @@ import { DevicePositionComponent } from './device-position/device-position.compo
 import { BluetoothComponent } from './bluetooth/bluetooth.component';
 import { UsbComponent } from './usb/usb.component';
 import { AudioVisualizationComponent } from './audio-visualization/audio-visualization.component';
-import { FileComponent } from './file/file.component';
+import { FileComponent, UploadFileDialogComponent } from './file/file.component';
+import { PreviewComponent } from './file/preview.component';
 import { FileDropDirective } from './directives/file-drop.directive';
 import { FormAndValidationComponent } from './form-and-validation/form-and-validation.component';
 
@@ -87,6 +89,8 @@ import { FormAndValidationComponent } from './form-and-validation/form-and-valid
     UsbComponent,
     AudioVisualizationComponent,
     FileComponent,
+    UploadFileDialogComponent,
+    PreviewComponent,
     FileDropDirective,
     FormAndValidationComponent,
   ],
@@ -118,9 +122,12 @@ import { FormAndValidationComponent } from './form-and-validation/form-and-valid
     MatTableModule,
     CdkTableModule,
     MatExpansionModule,
+    MatSliderModule,
   ],
   entryComponents: [
     SavePictureDialogComponent,
+    UploadFileDialogComponent,
+    PreviewComponent,
   ],
   providers: [
     { provide: ErrorHandler, useClass: RavenErrorHandler },

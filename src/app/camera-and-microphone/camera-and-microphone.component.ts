@@ -224,7 +224,7 @@ export class CameraAndMicrophoneComponent implements OnInit {
 
 
 @Component({
-  selector: 'app-dialog',
+  selector: 'app-save-picture-dialog',
   templateUrl: 'save-picture-dialog.html',
 })
 export class SavePictureDialogComponent implements OnInit {
