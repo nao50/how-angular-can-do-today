@@ -1,6 +1,11 @@
-import { Component, OnInit, OnDestroy, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, EventEmitter, Renderer2 } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SafeUrl } from '@angular/platform-browser';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { FormBuilder, Validators } from '@angular/forms';
+import { UploadFileDialogComponent } from './upload-file-dialog';
+import { filter } from 'rxjs/operators';
+import { FileHandle } from '../directives/file-drop.directive';
 
 @Component({
   selector: 'app-preview',
@@ -10,11 +15,19 @@ import { SafeUrl } from '@angular/platform-browser';
 export class PreviewComponent implements OnInit, OnDestroy {
   private _closing = new EventEmitter<{}>();
 
+  // private _filehandle: FileHandle = '';
   private _discription = '';
   private _url: SafeUrl = '';
   private _size = 0;
   private _sizeUnit = '';
   private _filename = '';
+  private _file: File;
+
+  constructor(
+    private renderer: Renderer2,
+    private formBuilder: FormBuilder,
+    public dialog: MatDialog,
+  ) { }
 
   ngOnInit() {
     // console.log(`SampleComponent.ngOnInit >> no="${this._no}"`);
@@ -28,6 +41,21 @@ export class PreviewComponent implements OnInit, OnDestroy {
     return this._closing;
   }
 
+  public set filehandle(value: FileHandle) {
+    console.log(value);
+    if (value.file) {
+      this.file = value.file;
+      this.size = value.file.size;
+      this.url = value.url;
+    }
+  }
+
+  // public get file(): File {
+  //   return this.file;
+  // }
+  public set file(value: File) {
+    this._file = value;
+  }
   public set discription(value: string) {
     this._discription = value;
   }
@@ -52,4 +80,24 @@ export class PreviewComponent implements OnInit, OnDestroy {
     this._closing.emit({});
   }
 
+  edit(): void {
+    const dialogRef = this.dialog.open(UploadFileDialogComponent, {
+      width: '32.5rem',
+      disableClose: true,
+      data: {file: this.file, url: this.url}
+    });
+    dialogRef.afterClosed().pipe(filter(value => value)).subscribe(
+      (value) => {
+        this.size = 0;
+          // this.addPreview(value.discription, value.data, value.filename);
+      }
+    );
+  }
+
+  download(): void {
+    const a = this.renderer.createElement('a') as HTMLAnchorElement;
+    a.href = this.savePictureCanvasElm.nativeElement.toDataURL(this.data);
+    a.setAttribute('download', 'image.png');
+    a.click();
+  }
 }

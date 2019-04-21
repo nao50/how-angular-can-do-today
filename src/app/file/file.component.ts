@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewChild, EventEmitter, ElementRef, Renderer2, Inject } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FileHandle } from '../directives/file-drop.directive';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
@@ -8,6 +7,8 @@ import { filter } from 'rxjs/operators';
 
 import { PreviewComponent } from './preview.component';
 import { ComponentFactory, ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
+
+import { UploadFileDialogComponent } from './upload-file-dialog';
 
 @Component({
   selector: 'app-file',
@@ -18,20 +19,13 @@ export class FileComponent implements OnInit {
   factory: ComponentFactory<PreviewComponent>;
   @ViewChild('preview', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
 
-  // public onFileDrop: EventEmitter<File[]> = new EventEmitter<File[]>();
-
   @ViewChild('fileInput') fileInput;
   file: File | null = null;
-
-  fileFormGroup = this.formBuilder.group({
-    file: ['', []],
-  });
 
   files: FileHandle[] = [];
 
   constructor(
     private resolver: ComponentFactoryResolver,
-    private formBuilder: FormBuilder,
     public dialog: MatDialog,
     private sanitizer: DomSanitizer,
   ) { }
@@ -43,10 +37,7 @@ export class FileComponent implements OnInit {
   addPreview(discription: string, filehandle: any, filename: string) {
     const componentRef = this.viewContainerRef.createComponent(this.factory);
 
-    if (filehandle.file) {
-      componentRef.instance.url = filehandle.url;
-      componentRef.instance.size = filehandle.file.size;
-    }
+    componentRef.instance.filehandle = filehandle;
     componentRef.instance.discription = discription;
     componentRef.instance.filename = filename;
 
@@ -56,7 +47,6 @@ export class FileComponent implements OnInit {
   }
 
   filesDropped(files: FileHandle[]): void {
-    console.log('files: ', files);
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       // Open Dialog
@@ -97,47 +87,4 @@ export class FileComponent implements OnInit {
       );
     }
   }
-
-
-}
-
-@Component({
-  selector: 'app-upload-file-dialog',
-  templateUrl: 'upload-file-dialog.html',
-  styleUrls: ['./upload-file-dialog.scss']
-})
-export class UploadFileDialogComponent implements OnInit {
-  filename: string;
-
-  fileFormGroup = this.formBuilder.group({
-    discription: [''],
-    data: [''],
-    filename: ['', [Validators.required]],
-  });
-
-  constructor(
-    private formBuilder: FormBuilder,
-    // private renderer: Renderer2,
-    public dialogRef: MatDialogRef<UploadFileDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
-
-  ngOnInit() {
-    if (this.data.file) {
-      this.fileFormGroup.patchValue({discription: '', data: this.data, filename: this.data.file.name});
-    }
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  uploadFile() {
-    this.dialogRef.close(this.fileFormGroup.value);
-    // const a = this.renderer.createElement('a') as HTMLAnchorElement;
-    // a.href = this.savePictureCanvasElm.nativeElement.toDataURL(this.data);
-    // a.setAttribute('download', 'image.png');
-    // a.click();
-  }
-
 }

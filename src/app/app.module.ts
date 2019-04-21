@@ -29,6 +29,8 @@ import { MatTableModule } from '@angular/material/table';
 import { CdkTableModule } from '@angular/cdk/table';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 // 3rd party (leaflet)
 import {icon, Marker} from 'leaflet';
@@ -69,10 +71,12 @@ import { DevicePositionComponent } from './device-position/device-position.compo
 import { BluetoothComponent } from './bluetooth/bluetooth.component';
 import { UsbComponent } from './usb/usb.component';
 import { AudioVisualizationComponent } from './audio-visualization/audio-visualization.component';
-import { FileComponent, UploadFileDialogComponent } from './file/file.component';
+import { FileComponent } from './file/file.component';
+import { UploadFileDialogComponent } from './file/upload-file-dialog';
 import { PreviewComponent } from './file/preview.component';
 import { FileDropDirective } from './directives/file-drop.directive';
 import { FormAndValidationComponent } from './form-and-validation/form-and-validation.component';
+import { CalendarComponent } from './calendar/calendar.component';
 
 
 @NgModule({
@@ -93,6 +97,7 @@ import { FormAndValidationComponent } from './form-and-validation/form-and-valid
     PreviewComponent,
     FileDropDirective,
     FormAndValidationComponent,
+    CalendarComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -123,6 +128,8 @@ import { FormAndValidationComponent } from './form-and-validation/form-and-valid
     CdkTableModule,
     MatExpansionModule,
     MatSliderModule,
+    MatSnackBarModule,
+    MatDatepickerModule,
   ],
   entryComponents: [
     SavePictureDialogComponent,

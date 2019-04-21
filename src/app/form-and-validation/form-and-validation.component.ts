@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
 
 export interface Product {
   productName: string;
@@ -13,10 +14,17 @@ export interface Products {
 }
 export interface Order {
   products: Products[];
-  options: AdditionalOptions;
+  options: SpecialOptions;
 }
-export interface AdditionalOptions {
-  p: string;
+export interface SpecialOptions {
+  op: string;
+}
+
+export interface Receipt {
+  productName: string;
+  unitPrice: number;
+  productNumber: number;
+  subTotal: number;
 }
 
 @Component({
@@ -34,6 +42,16 @@ export class FormAndValidationComponent implements OnInit {
     {productName: 'Banana', productCode: 'p003', price: 60, maxQuantity: 5},
     {productName: 'Pineapple', productCode: 'p004', price: 500, maxQuantity: 3},
   ];
+  displayRemoveIcon = false;
+
+  displayedColumns: string[] = ['Product', 'Unitprice', 'Number', 'Subtotal'];
+  receipt: Receipt[] = [
+    {productName: 'Apple', unitPrice: 100, productNumber: 5, subTotal: 500},
+    {productName: 'Orange', unitPrice: 80, productNumber: 2, subTotal: 160},
+    {productName: 'Pineapple', unitPrice: 500, productNumber: 3, subTotal: 1500},
+  ];
+
+
 
   productFormGroup = this.formBuilder.group({
     products: this.formBuilder.array([
@@ -46,6 +64,7 @@ export class FormAndValidationComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit() {
@@ -56,6 +75,12 @@ export class FormAndValidationComponent implements OnInit {
     this.productFormGroup.valueChanges.subscribe(
       (value: Order) => {
         this.calculate(value);
+        if (this.products.length === 1) {
+          this.displayRemoveIcon = false;
+        } else {
+          this.displayRemoveIcon = true;
+        }
+
         if (this.productFormGroup.status === 'INVALID') {
           console.log('INVALID');
         } else if ( this.productFormGroup.status === 'VALID') {
@@ -117,22 +142,51 @@ export class FormAndValidationComponent implements OnInit {
 
     // calculate Receipt
     const arr = [];
-    for (let i = 0; i < this.sampleProducts.length; i++) {
-      arr.push(this.sampleProducts[i].productName);
+    for (let i = 0; i < order.products.length; i++) {
+      if (order.products[i].product) {
+        arr.push(order.products[i]);
+      }
     }
 
-    const productNameList = arr.filter((x, i, self) => self.indexOf(x) === i);
-    // console.log(productNameList);
+    const map2 = new Map;
+    const receipt = [];
+
+    arr.reduce(function(map, current) {
+      // const productName = current.product.productName;
+      // map.set(productName, map.has(productName) ? map.get(productName) + current.productNumber : current.productNumber);
+      map.set(current.product, map.has(current.product) ? map.get(current.product) + current.productNumber : current.productNumber);
+      return map;
+    }, map2).forEach(function (value, key, map) {
+      this.push({product: key, productNumber: value});
+    }, receipt);
+
+    console.log('receipt: ', receipt);
+
+  }
+
+  save() {
+    // localStorage.setItem('howAngularForm', token);
+    const message = 'message';
+    const action = 'action';
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
+
+  getTotalCost() {
+    // return this.transactions.map(t => t.cost).reduce((acc, value) => acc + value, 0);
+    return this.receipt.map(t => t.subTotal).reduce((acc, value) => acc + value, 0);
   }
 
   getProductNumberErrorMessage(index: number) {
     // if (this.products.controls[index]['controls'].product.value) {
     //   console.log('ABC: ', this.products.controls[index]['controls'].product.value.price);
     // }
-    return (<FormArray>this.productFormGroup.get('products')).controls[index]['controls'].productNumber.hasError('maxQuantity') ? '1度に発注できる最大件数を超えています' :
-      (<FormArray>this.productFormGroup.get('products')).controls[index]['controls'].productNumber.hasError('integer') ? '個数を入力してください' :
-      (<FormArray>this.productFormGroup.get('products')).controls[index]['controls'].productNumber.hasError('required') ? '個数を入力してください' :
-      '' ;
+
+    // return (<FormArray>this.productFormGroup.get('products')).controls[index]['controls'].productNumber.hasError('maxQuantity') ? '1度に発注できる最大件数を超えています' :
+    //   (<FormArray>this.productFormGroup.get('products')).controls[index]['controls'].productNumber.hasError('integer') ? '個数を入力してください' :
+    //   (<FormArray>this.productFormGroup.get('products')).controls[index]['controls'].productNumber.hasError('required') ? '個数を入力してください' :
+    //   '' ;
   }
 
 }

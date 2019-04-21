@@ -7,8 +7,7 @@
           <div fxLayout="row wrap">
             <div fxFlex="100">
 
-                <form class="drop-zone" [formGroup]="fileFormGroup" appFileDrop (files)="filesDropped($event)">
-
+                <form class="drop-zone" appFileDrop (files)="filesDropped($event)">
                   <div fxLayout="column" highlight="4-9" (click)="onClickFileInputButton()">
 
                     <div fxFlex="150px" class="icon-row" fxLayoutAlign="center center">
@@ -22,9 +21,7 @@
                     </div>
 
                   </div>
-
-                  <input type="file" style="display: none" #fileInput accept="image/*" formControlName="file" (change)="onChangeFileInput($event.target.files)" multiple/>
-
+                  <input type="file" style="display: none" #fileInput accept="image/*" (change)="onChangeFileInput($event.target.files)" multiple/>
                 </form>
                 
             </div>

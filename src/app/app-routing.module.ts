@@ -11,7 +11,7 @@ import { UsbComponent } from './usb/usb.component';
 import { AudioVisualizationComponent } from './audio-visualization/audio-visualization.component';
 import { FileComponent } from './file/file.component';
 import { FormAndValidationComponent } from './form-and-validation/form-and-validation.component';
-
+import { CalendarComponent } from './calendar/calendar.component';
 
 const routes: Routes = [
   {
@@ -49,6 +49,10 @@ const routes: Routes = [
   {
     path: 'form-validation',
     component: FormAndValidationComponent,
+  },
+  {
+    path: 'calendar',
+    component: CalendarComponent,
   },
   {
     path: '**',
