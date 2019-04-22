@@ -42,12 +42,13 @@
                           <button mat-raised-button color="accent" (click)="load()" [disabled]="formStatus">Load</button>
                         </div> -->
                         <div fxFlex="12" fxLayoutAlign="center center">
-                          <button mat-raised-button color="warn" (click)="reset()" [disabled]="formStatus">Reset</button>
+                          <button mat-raised-button color="warn" (click)="reset()">Reset</button>
                         </div>
                       </div>
 
                       <div class="product-formarray" formArrayName="products" fxFlex="100" fxLayout="row wrap">
-                        <div *ngFor="let test of products.controls; let i=index; let last=last; let first=first;" [formGroupName]="i" fxFlex="100" fxFlex.sm="100" fxLayout="row wrap">
+                        <!-- <div *ngFor="let test of products.controls; let i=index; let last=last; let first=first;" [formGroupName]="i" fxFlex="100" fxFlex.sm="100" fxLayout="row wrap"> -->
+                        <div *ngFor="let test of products.controls; let index=index; let last=last;" [formGroupName]="index" fxFlex="100" fxFlex.sm="100" fxLayout="row wrap">
                     
                           <mat-form-field class="product-form" fxFlex="50" fxFlex.xs="100">
                             <input #stateInput matInput type="text" placeholder="Product" aria-label="Number" formControlName="product" [matAutocomplete]="auto">
@@ -65,17 +66,17 @@
 
                           <!-- Unit Price -->
                           <mat-form-field class="product-form" fxFlex="10" fxFlex.xs="100">
-                            <input matInput placeholder="Unit Price" value="{{ getUnitPrice(i) || 0 | number}}" readonly="readonly">
+                            <input matInput placeholder="Unit Price" value="{{ getUnitPrice(index) || 0 | number}}" readonly="readonly">
                           </mat-form-field>
 
                           <mat-form-field class="product-form" fxFlex="20" fxFlex.xs="100">
-                            <input matInput placeholder="Number" type="number" formControlName="productNumber">
-                            <mat-error>{{ getErrorMessage(i) }}</mat-error>
+                            <input matInput placeholder="Number" type="number" formControlName="productNumber" min="1">
+                            <mat-error>{{ getErrorMessage(index) }}</mat-error>
                           </mat-form-field>
                     
                           <div *ngIf="displayRemoveIcon"fxLayoutAlign="center center">
                             <button mat-icon-button class="product-form-del" fxFlex="10" fxFlex.xs="100">
-                              <mat-icon (click)="delInput(i)">remove_circle_outline</mat-icon>
+                              <mat-icon (click)="delInput(index)">remove_circle_outline</mat-icon>
                             </button>
                           </div>
 

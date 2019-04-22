@@ -13,7 +13,6 @@ export class CustomValidator {
           return null;
         }
       }
-      console.log('notInteger', notInteger);
       return {'integerInvalid': true};
     }
 

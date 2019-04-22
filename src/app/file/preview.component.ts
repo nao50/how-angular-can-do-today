@@ -95,9 +95,9 @@ export class PreviewComponent implements OnInit, OnDestroy {
   }
 
   download(): void {
-    const a = this.renderer.createElement('a') as HTMLAnchorElement;
-    a.href = this.savePictureCanvasElm.nativeElement.toDataURL(this.data);
-    a.setAttribute('download', 'image.png');
-    a.click();
+    // const a = this.renderer.createElement('a') as HTMLAnchorElement;
+    // a.href = this.savePictureCanvasElm.nativeElement.toDataURL(this.data);
+    // a.setAttribute('download', 'image.png');
+    // a.click();
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormArray, Validators } from '@angular/forms';
+import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 
 import { MatTableDataSource } from '@angular/material';
@@ -41,25 +41,27 @@ export class FormAndValidationComponent implements OnInit {
     {productName: 'Pineapple', productCode: 'p004', price: 500, maxQuantity: 3},
   ];
   displayRemoveIcon = false;
+  formInvalid = false;
 
   displayedColumns: string[] = ['productName', 'price', 'productNumber', 'Subtotal'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
   data = new MatTableDataSource(this.productsList);
 
-
-  productFormGroup = this.formBuilder.group({
-    products: this.formBuilder.array([
-      this.formBuilder.group({
-        product: [this.product],
-        productNumber: [1, [Validators.min(1), CustomValidator.integer, CustomValidator.maxQuantity]],
-      })
-    ])
-  });
+  productFormGroup: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
-  ) { }
+  ) {
+    this.productFormGroup = this.formBuilder.group({
+      products: this.formBuilder.array([
+        this.formBuilder.group({
+          product: [this.product],
+          productNumber: [1, [Validators.min(1), CustomValidator.integer, CustomValidator.maxQuantity]],
+        })
+      ])
+    });
+  }
 
   ngOnInit() {
     this.formSubscribe();
@@ -69,7 +71,7 @@ export class FormAndValidationComponent implements OnInit {
     this.productFormGroup.valueChanges.subscribe(
       (value: Order) => {
         // console.log('value: ', value);
-        this.calculate(value);
+
         if (this.products.length === 1) {
           this.displayRemoveIcon = false;
         } else {
@@ -77,10 +79,12 @@ export class FormAndValidationComponent implements OnInit {
         }
 
         if (this.productFormGroup.status === 'INVALID') {
-          console.log('INVALID');
+          this.formInvalid = true;
         } else if ( this.productFormGroup.status === 'VALID') {
-          console.log('VALID');
+          this.formInvalid = false;
         }
+
+        this.calculate(value);
       }
     );
   }
@@ -92,7 +96,7 @@ export class FormAndValidationComponent implements OnInit {
   addInput() {
     this.products.push(this.formBuilder.group({
       product: [''],
-      productNumber: [1, [Validators.required, Validators.min(1)]]
+      productNumber: [1, [Validators.min(1), CustomValidator.integer, CustomValidator.maxQuantity]]
     }));
   }
 
@@ -129,10 +133,14 @@ export class FormAndValidationComponent implements OnInit {
   calculate(order?: Order) {
     // calculate Total
     this.Total = 0;
-    for (let i = 0; i < order.products.length; i++) {
-      if (order.products[i].product) {
-        this.Total += (order.products[i].product.price * order.products[i].productNumber);
+    if (!this.formInvalid) {
+      for (let i = 0; i < order.products.length; i++) {
+        if (order.products[i].product) {
+          this.Total += (order.products[i].product.price * order.products[i].productNumber);
+        }
       }
+    } else {
+      this.Total = 0;
     }
 
     // calculate Receipt
@@ -154,7 +162,11 @@ export class FormAndValidationComponent implements OnInit {
     }, this.productsList);
 
     // console.log('this.productsList: ', this.productsList);
-    this.data = new MatTableDataSource(this.productsList);
+    if (!this.formInvalid) {
+      this.data = new MatTableDataSource(this.productsList);
+    } else {
+      this.data = new MatTableDataSource([]);
+    }
 
   }
 
@@ -177,7 +189,11 @@ export class FormAndValidationComponent implements OnInit {
   }
 
   getTotal() {
-    return this.productsList.map(t => (t.product.price * t.productNumber)).reduce((acc, value) => acc + value, 0);
+    if (!this.formInvalid) {
+      return this.productsList.map(t => (t.product.price * t.productNumber)).reduce((acc, value) => acc + value, 0);
+    } else {
+      return 0;
+    }
   }
 
   getErrorMessage(index: number) {
