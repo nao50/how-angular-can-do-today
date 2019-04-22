@@ -35,22 +35,21 @@
                     <div fxFlex="100" fxLayout="row wrap">
 
                       <div class="button-row" fxFlex="100" fxLayout="row wrap">
-                        <div>
-                          <!-- <button mat-raised-button color="primary" (click)="save()" [disabled]="!formStatus">Save</button> -->
-                          <button mat-raised-button color="primary" (click)="save()">Save</button>
+                        <!-- <div fxFlex="12" fxLayoutAlign="center center">
+                          <button mat-raised-button color="primary" (click)="save()" [disabled]="formStatus">Save</button>
                         </div>
-                      </div>
-
-                      <div fxFlex="100" fxLayout="row wrap">
-                        <mat-form-field class="product-form" fxFlex="100" fxFlex.xs="100">
-                          <input fxFlex="100" matInput placeholder="Choose option">
-                        </mat-form-field>
+                        <div fxFlex="12" fxLayoutAlign="center center">
+                          <button mat-raised-button color="accent" (click)="load()" [disabled]="formStatus">Load</button>
+                        </div> -->
+                        <div fxFlex="12" fxLayoutAlign="center center">
+                          <button mat-raised-button color="warn" (click)="reset()" [disabled]="formStatus">Reset</button>
+                        </div>
                       </div>
 
                       <div class="product-formarray" formArrayName="products" fxFlex="100" fxLayout="row wrap">
                         <div *ngFor="let test of products.controls; let i=index; let last=last; let first=first;" [formGroupName]="i" fxFlex="100" fxFlex.sm="100" fxLayout="row wrap">
                     
-                          <mat-form-field class="product-form" fxFlex="60" fxFlex.xs="100">
+                          <mat-form-field class="product-form" fxFlex="50" fxFlex.xs="100">
                             <input #stateInput matInput type="text" placeholder="Product" aria-label="Number" formControlName="product" [matAutocomplete]="auto">
                             <!-- stateInput -->
                             <button mat-button *ngIf="stateInput.value" matSuffix mat-icon-button aria-label="Clear" (click)="delSelectedProduct(i)">
@@ -69,9 +68,9 @@
                             <input matInput placeholder="Unit Price" value="{{ getUnitPrice(i) || 0 | number}}" readonly="readonly">
                           </mat-form-field>
 
-                          <mat-form-field class="product-form" fxFlex="10" fxFlex.xs="100">
-                            <input matInput placeholder="Number" type="number" formControlName="productNumber" min="1">
-                            <mat-error>{{ getProductNumberErrorMessage(i) }}</mat-error>
+                          <mat-form-field class="product-form" fxFlex="20" fxFlex.xs="100">
+                            <input matInput placeholder="Number" type="number" formControlName="productNumber">
+                            <mat-error>{{ getErrorMessage(i) }}</mat-error>
                           </mat-form-field>
                     
                           <div *ngIf="displayRemoveIcon"fxLayoutAlign="center center">
@@ -121,36 +120,36 @@
           <div fxLayout="row wrap">
             <div fxFlex="100" fxLayoutAlign="start center">
 
-              <table mat-table [dataSource]="receipt" class="mat-elevation-z2">
+                <table mat-table [dataSource]="data" class="mat-elevation-z2">
 
-                <ng-container matColumnDef="Product">
-                  <th mat-header-cell *matHeaderCellDef> Product </th>
-                  <td mat-cell *matCellDef="let receipt"> {{receipt.productName}} </td>
-                  <td mat-footer-cell *matFooterCellDef> Total </td>
-                </ng-container>
-              
-                <ng-container matColumnDef="Unitprice">
-                  <th mat-header-cell *matHeaderCellDef> Unitprice </th>
-                  <td mat-cell *matCellDef="let receipt"> {{receipt.unitPrice}} </td>
-                  <td mat-footer-cell *matFooterCellDef></td>
-                </ng-container>
+                  <ng-container matColumnDef="productName">
+                    <th mat-header-cell *matHeaderCellDef> Item </th>
+                    <td mat-cell *matCellDef="let data"> {{data.product.productName}} </td>
+                    <td mat-footer-cell *matFooterCellDef> Total </td>
+                  </ng-container>
 
-                <ng-container matColumnDef="Number">
-                  <th mat-header-cell *matHeaderCellDef> Number </th>
-                  <td mat-cell *matCellDef="let receipt"> {{receipt.productNumber}} </td>
-                  <td mat-footer-cell *matFooterCellDef></td>
-                </ng-container>
+                  <ng-container matColumnDef="price">
+                    <th mat-header-cell *matHeaderCellDef> Unitprice </th>
+                    <td mat-cell *matCellDef="let data"> {{data.product.price | number}} </td>
+                    <td mat-footer-cell *matFooterCellDef> </td>
+                  </ng-container>
 
-                <ng-container matColumnDef="Subtotal">
-                  <th mat-header-cell *matHeaderCellDef> Subtotal </th>
-                  <td mat-cell *matCellDef="let receipt"> {{receipt.subTotal}} </td>
-                  <td mat-footer-cell *matFooterCellDef> {{getTotalCost()}} </td>
-                </ng-container>
-              
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
-              </table>
+                  <ng-container matColumnDef="productNumber">
+                    <th mat-header-cell *matHeaderCellDef> Number </th>
+                    <td mat-cell *matCellDef="let data"> {{data.productNumber | number}} </td>
+                    <td mat-footer-cell *matFooterCellDef> </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="Subtotal">
+                    <th mat-header-cell *matHeaderCellDef> Subtotal </th>
+                    <td mat-cell *matCellDef="let data">{{ data.product.price * data.productNumber || 0 | number}}</td>
+                    <td mat-footer-cell *matFooterCellDef>{{getTotal() || 0 | number}}</td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                  <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+                  <tr mat-footer-row *matFooterRowDef="columnsToDisplay"></tr>
+                </table> 
 
             </div>
           </div>

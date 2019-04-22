@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 
+import { MatTableDataSource } from '@angular/material';
+
+import { CustomValidator } from './custom-form-validator';
+
 export interface Product {
   productName: string;
   productCode: string;
@@ -14,17 +18,10 @@ export interface Products {
 }
 export interface Order {
   products: Products[];
-  options: SpecialOptions;
 }
-export interface SpecialOptions {
-  op: string;
-}
-
-export interface Receipt {
-  productName: string;
-  unitPrice: number;
-  productNumber: number;
-  subTotal: number;
+export interface Cart {
+  cartName: string;
+  products: Products[];
 }
 
 @Component({
@@ -36,6 +33,7 @@ export class FormAndValidationComponent implements OnInit {
   Total: number;
   unitPrice: number;
   product: Product;
+  productsList: Products[] = [];
   sampleProducts: Product[] = [
     {productName: 'Apple', productCode: 'p001', price: 100, maxQuantity: 10},
     {productName: 'Orange', productCode: 'p002', price: 80, maxQuantity: 15},
@@ -44,20 +42,16 @@ export class FormAndValidationComponent implements OnInit {
   ];
   displayRemoveIcon = false;
 
-  displayedColumns: string[] = ['Product', 'Unitprice', 'Number', 'Subtotal'];
-  receipt: Receipt[] = [
-    {productName: 'Apple', unitPrice: 100, productNumber: 5, subTotal: 500},
-    {productName: 'Orange', unitPrice: 80, productNumber: 2, subTotal: 160},
-    {productName: 'Pineapple', unitPrice: 500, productNumber: 3, subTotal: 1500},
-  ];
-
+  displayedColumns: string[] = ['productName', 'price', 'productNumber', 'Subtotal'];
+  columnsToDisplay: string[] = this.displayedColumns.slice();
+  data = new MatTableDataSource(this.productsList);
 
 
   productFormGroup = this.formBuilder.group({
     products: this.formBuilder.array([
       this.formBuilder.group({
         product: [this.product],
-        productNumber: [1, [Validators.min(1)]],
+        productNumber: [1, [Validators.min(1), CustomValidator.integer, CustomValidator.maxQuantity]],
       })
     ])
   });
@@ -74,6 +68,7 @@ export class FormAndValidationComponent implements OnInit {
   formSubscribe() {
     this.productFormGroup.valueChanges.subscribe(
       (value: Order) => {
+        // console.log('value: ', value);
         this.calculate(value);
         if (this.products.length === 1) {
           this.displayRemoveIcon = false;
@@ -149,44 +144,46 @@ export class FormAndValidationComponent implements OnInit {
     }
 
     const map2 = new Map;
-    const receipt = [];
+    this.productsList = [];
 
     arr.reduce(function(map, current) {
-      // const productName = current.product.productName;
-      // map.set(productName, map.has(productName) ? map.get(productName) + current.productNumber : current.productNumber);
       map.set(current.product, map.has(current.product) ? map.get(current.product) + current.productNumber : current.productNumber);
       return map;
-    }, map2).forEach(function (value, key, map) {
+    }, map2).forEach(function (value, key) {
       this.push({product: key, productNumber: value});
-    }, receipt);
+    }, this.productsList);
 
-    console.log('receipt: ', receipt);
+    // console.log('this.productsList: ', this.productsList);
+    this.data = new MatTableDataSource(this.productsList);
 
   }
 
   save() {
-    // localStorage.setItem('howAngularForm', token);
-    const message = 'message';
-    const action = 'action';
+    localStorage.setItem('howAngularForm', JSON.stringify(this.productsList));
+    const message = 'success';
+    const action = 'save';
     this.snackBar.open(message, action, {
       duration: 2000,
     });
   }
 
-  getTotalCost() {
-    // return this.transactions.map(t => t.cost).reduce((acc, value) => acc + value, 0);
-    return this.receipt.map(t => t.subTotal).reduce((acc, value) => acc + value, 0);
+  load() {}
+
+  reset() {
+    while (this.products.length !== 0) {
+      this.products.removeAt(0);
+    }
+    this.addInput();
   }
 
-  getProductNumberErrorMessage(index: number) {
-    // if (this.products.controls[index]['controls'].product.value) {
-    //   console.log('ABC: ', this.products.controls[index]['controls'].product.value.price);
-    // }
+  getTotal() {
+    return this.productsList.map(t => (t.product.price * t.productNumber)).reduce((acc, value) => acc + value, 0);
+  }
 
-    // return (<FormArray>this.productFormGroup.get('products')).controls[index]['controls'].productNumber.hasError('maxQuantity') ? '1度に発注できる最大件数を超えています' :
-    //   (<FormArray>this.productFormGroup.get('products')).controls[index]['controls'].productNumber.hasError('integer') ? '個数を入力してください' :
-    //   (<FormArray>this.productFormGroup.get('products')).controls[index]['controls'].productNumber.hasError('required') ? '個数を入力してください' :
-    //   '' ;
+  getErrorMessage(index: number) {
+    return this.products.controls[index]['controls'].productNumber.hasError('integerInvalid') ? 'Enter an integer value' :
+    this.products.controls[index]['controls'].productNumber.hasError('maxQuantityInvalid') ? 'Exceeds the maximum number' :
+    '' ;
   }
 
 }
