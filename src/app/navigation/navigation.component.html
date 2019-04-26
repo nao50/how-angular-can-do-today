@@ -2,7 +2,7 @@
   <mat-toolbar color="primary" class="example-toolbar">
     <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
 
-    <a _ngcontent-c0="" href="/">
+    <a _ngcontent-c0="" routerLink="/top">
       <img _ngcontent-c0="" alt="logo" class="toolbar-logo" height="30" src="../../assets/icons/icon-96x96.png">
     </a>
     <h1>HOW ANGULAR CAN DO TODAY</h1>
@@ -22,37 +22,20 @@
         Audio & Video 
       </a>
 
-      <a mat-list-item routerLink="/audio-visualization">
+      <!-- <a mat-list-item routerLink="/audio-visualization">
         <mat-icon class="nav-list-icon">
           show_chart
         </mat-icon> 
         Audio Visualization
-      </a>
+      </a> -->
 
       <a mat-list-item routerLink="/top">
         <mat-icon class="nav-list-icon">
           videocam
         </mat-icon> 
         Real-time Communication 
-      </a>
+      </a> 
 
-      <!-- Location & Position -->
-      <h3> Location & Position </h3>
-
-      <a mat-list-item routerLink="/geolocation">
-        <mat-icon class="nav-list-icon">
-          gps_fixed
-        </mat-icon>
-        Geolocation 
-      </a>
-
-      <a mat-list-item routerLink="/deviceposition">
-        <mat-icon class="nav-list-icon">
-          screen_rotation
-        </mat-icon>
-        Device Position
-      </a>
-    
       <!-- Surroundings -->
       <h3> Surroundings </h3>
 
@@ -69,6 +52,36 @@
         </mat-icon>
         USB 
       </a>
+
+      <!-- Device Features -->
+      <h3> Device Features </h3>
+      <!-- Native Behaviors -->
+      <h3> Native Behaviors </h3>
+      <!-- Operating System -->
+      <h3> Operating System </h3>
+      <!-- Input -->
+      <h3> Input </h3>
+      <!-- Seamless Experience -->
+      <h3> Seamless Experience </h3>
+      <!-- Location & Position -->
+      <h3> Location & Position </h3>
+
+      <a mat-list-item routerLink="/geolocation">
+        <mat-icon class="nav-list-icon">
+          gps_fixed
+        </mat-icon>
+        Geolocation 
+      </a>
+
+      <a mat-list-item routerLink="/deviceposition">
+        <mat-icon class="nav-list-icon">
+          screen_rotation
+        </mat-icon>
+        Device Position
+      </a>
+
+      <!-- Screen & Output -->
+      <h3> Screen & Output </h3>
 
       <!-- Angular -->
       <h3> Angular </h3>
@@ -88,20 +101,13 @@
       </a>
 
       <!-- Other -->
-      <h3> Google API </h3>
+      <!-- <h3> Google API </h3>
 
       <a mat-list-item routerLink="/file">
         <mat-icon class="nav-list-icon">
           map
         </mat-icon>
         Google Map
-      </a>
-
-      <a mat-list-item routerLink="/calendar">
-        <mat-icon class="nav-list-icon">
-          calendar_today
-        </mat-icon>
-        Calendar
       </a>
 
       <a mat-list-item routerLink="/file">
@@ -115,10 +121,17 @@
         <mat-icon class="nav-list-icon" svgIcon="firebase">
         </mat-icon>
         Firebase 
-      </a>
+      </a> -->
       
       <!-- Other -->
       <h3> Other </h3>
+
+      <a mat-list-item routerLink="/calendar">
+        <mat-icon class="nav-list-icon">
+          calendar_today
+        </mat-icon>
+        Calendar
+      </a>
 
       <a mat-list-item routerLink="/top">
         <mat-icon class="nav-list-icon">

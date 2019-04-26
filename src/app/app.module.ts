@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, ɵDomSanitizerImpl } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -138,6 +138,7 @@ import { CalendarComponent } from './calendar/calendar.component';
   ],
   providers: [
     { provide: ErrorHandler, useClass: RavenErrorHandler },
+    ɵDomSanitizerImpl,
   ],
   bootstrap: [AppComponent]
 })

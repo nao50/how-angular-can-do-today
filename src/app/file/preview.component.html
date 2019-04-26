@@ -21,19 +21,15 @@
             {{_discription}}
           </div>
 
-          <div fxFlex="10" fxFlexFill fxLayoutAlign="end center">
-            <button mat-icon-button class="preview-button">
-              <mat-icon class="preview-button-icon" (click)="download()">file_download</mat-icon>
+          <div fxFlex="15" fxFlexFill fxLayoutAlign="end center">
+            <button mat-raised-button color="primary" (click)="download()" class="preview-button">
+              download
             </button>
           </div>
+          
           <div fxFlex="10" fxFlexFill fxLayoutAlign="end center">
-            <button mat-icon-button class="preview-button">
-              <mat-icon class="preview-button-icon" (click)="edit()">edit</mat-icon>
-            </button>
-          </div>
-          <div fxFlex="10" fxFlexFill fxLayoutAlign="end center">
-            <button mat-icon-button class="preview-button">
-              <mat-icon class="preview-button-icon" (click)="del()">delete</mat-icon>
+            <button mat-raised-button color="warn" (click)="del()" class="preview-button">
+              delete
             </button>
           </div>
 

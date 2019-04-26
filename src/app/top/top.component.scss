@@ -1,11 +1,66 @@
 // card
 .card {
-    padding: 14px
+    padding: 14px;
 }
 
-mat-card:hover {
+.top-card {
+    transition: all 0.3s;
+}
+
+.top-card:hover {
+    -webkit-box-shadow: 0 4px 4px rgba(1,67,163,.24), 0 0 4px rgba(1,67,163,.12), 0 6px 18px rgba(43,133,231,.12);
     box-shadow: 0 4px 4px rgba(1,67,163,.24), 0 0 4px rgba(1,67,163,.12), 0 6px 18px rgba(43,133,231,.12);
+    -webkit-transform: translate3d(0,-2px,0);
     transform: translate3d(0,-2px,0);
-    // transition-duration: 1s;
 }
 
+.background-sky {
+    background-color: #3f51b5;
+    background: linear-gradient(180deg,#3f51b5 30%,#42a5f5 99%);
+    color: #fff;
+    z-index: -10;
+}
+
+.hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    min-height: 480px;
+    height: 80vh;
+    max-height: 560px;
+    box-sizing: border-box;
+    padding: 48px 48px 32px;
+    overflow: hidden;
+    -webkit-transform: skewY(8deg);
+    transform: skewY(8deg);
+    -webkit-transform-origin: 100%;
+    transform-origin: 100%;
+}
+
+
+
+////////
+
+
+section {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+  
+.scroll-button-first {
+    position: absolute;
+    bottom: 89px;
+    right: 25px;
+}
+
+.scroll-button {
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
+}

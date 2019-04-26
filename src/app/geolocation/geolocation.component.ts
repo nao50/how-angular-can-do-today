@@ -15,7 +15,6 @@ export interface GeoLocations {
 
 export interface GeoTable {
   index: number;
-  // time: number;
   time: Date;
   lat: number;
   lon: number;
@@ -54,6 +53,7 @@ export class GeolocationComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
+    this.initMap();
     // Stop listening for location after 10 seconds
     // setTimeout(() => { this.locationsSubscription.unsubscribe(); }, 10000);
   }
@@ -103,7 +103,7 @@ export class GeolocationComponent implements OnInit, AfterViewInit, OnDestroy {
         this.loading = false;
 
         if (this.map) {
-          this.setMap();
+          this.setMaker();
         }
       },
       error => {
@@ -112,11 +112,11 @@ export class GeolocationComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     );
 
-
     if (this.map) {
       this.start = true;
       this.loading = false;
     }
+
   }
 
   unsubscribeGeolocation() {
@@ -126,7 +126,9 @@ export class GeolocationComponent implements OnInit, AfterViewInit, OnDestroy {
 
   initMap() {
     // 43.062638, 141.353921 is my hometown Sapporo! Best place in the earth! :)
-    this.map = L.map('map').setView([this.geoLocation.lat, this.geoLocation.lon], 14);
+    // this.map = L.map('map').setView([this.geoLocation.lat, this.geoLocation.lon], 14);
+    this.map = L.map('map').setView([43.062638, 141.353921], 14);
+
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map);
@@ -136,7 +138,7 @@ export class GeolocationComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  setMap() {
+  setMaker() {
     const polylineArray = [];
 
     if (this.geoLocationArray) {
@@ -150,9 +152,10 @@ export class GeolocationComponent implements OnInit, AfterViewInit, OnDestroy {
           '<b>Hello!!</b><br>Today is ' + (now.getMonth() + 1) + '/' + now.getDate()
         ).addTo(this.map);
 
+        this.map.flyTo([this.geoLocationArray[i].lat, this.geoLocationArray[i].lon], 14, { duration: 2 });
+
         // polylineArray
         polylineArray.push( [this.geoLocationArray[i].lat, this.geoLocationArray[i].lon]);
-        console.log('polylineArray: ', polylineArray);
 
         // Add line
         L.polyline([polylineArray], {
@@ -162,36 +165,10 @@ export class GeolocationComponent implements OnInit, AfterViewInit, OnDestroy {
         }).addTo(this.map);
 
       }
-
     }
 
-
-    // L.marker(
-    //   [this.geoLocation.lat, this.geoLocation.lon]
-    // ).bindPopup(
-    //   '<b>Hello!!</b><br>Today is ' + (now.getMonth() + 1) + '/' + now.getDate()
-    // ).addTo(this.map);
-
-    // L.circle(
-    //   [this.geoLocation.lat, this.geoLocation.lon],
-    //   { color: 'red', fillColor: '#f03', fillOpacity: 0.5, radius: 500}
-    // ).addTo(this.map);
-
-    // L.polyline([
-    //   [34.702495, 135.495961],
-    //   [34.712525, 135.505991],
-    //   [34.712545, 135.504991],
-    // ], {
-    //   'color': '#FF0000',
-    //   'weight': 5,
-    //   'opacity': 0.6
-    // }).addTo(this.map);
-
-    // this.map.on('locationfound', this.setMap);
-    // this.map.locate({setView: true, watch: true, maxZoom: 14});
-
     this.start = true;
-    this.initDone = true;
+    // this.initDone = true;
   }
 
 

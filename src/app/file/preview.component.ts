@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy, EventEmitter, Renderer2 } from '@angular/core';
+import { Component, OnInit, OnDestroy, EventEmitter, Renderer2, SecurityContext } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SafeUrl } from '@angular/platform-browser';
+import { SafeUrl, ɵDomSanitizerImpl, DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormBuilder, Validators } from '@angular/forms';
 import { UploadFileDialogComponent } from './upload-file-dialog';
@@ -27,6 +27,8 @@ export class PreviewComponent implements OnInit, OnDestroy {
     private renderer: Renderer2,
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
+    protected _sanitizer: DomSanitizer,
+    protected _sanitizerImpl: ɵDomSanitizerImpl
   ) { }
 
   ngOnInit() {
@@ -42,7 +44,6 @@ export class PreviewComponent implements OnInit, OnDestroy {
   }
 
   public set filehandle(value: FileHandle) {
-    console.log(value);
     if (value.file) {
       this.file = value.file;
       this.size = value.file.size;
@@ -59,7 +60,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
   public set discription(value: string) {
     this._discription = value;
   }
-  public set url(value: SafeUrl) {
+  public set url(value: SafeResourceUrl) {
     this._url = value;
   }
   public set size(value: number) {
@@ -80,24 +81,11 @@ export class PreviewComponent implements OnInit, OnDestroy {
     this._closing.emit({});
   }
 
-  edit(): void {
-    const dialogRef = this.dialog.open(UploadFileDialogComponent, {
-      width: '32.5rem',
-      disableClose: true,
-      data: {file: this.file, url: this.url}
-    });
-    dialogRef.afterClosed().pipe(filter(value => value)).subscribe(
-      (value) => {
-        this.size = 0;
-          // this.addPreview(value.discription, value.data, value.filename);
-      }
-    );
-  }
-
   download(): void {
-    // const a = this.renderer.createElement('a') as HTMLAnchorElement;
-    // a.href = this.savePictureCanvasElm.nativeElement.toDataURL(this.data);
-    // a.setAttribute('download', 'image.png');
-    // a.click();
+    const sanitizedUrl = this._sanitizerImpl.sanitize(SecurityContext.RESOURCE_URL,  this._url);
+    const a = this.renderer.createElement('a') as HTMLAnchorElement;
+    a.href = sanitizedUrl;
+    a.setAttribute('download', this._filename);
+    a.click();
   }
 }

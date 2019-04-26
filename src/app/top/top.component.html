@@ -1,5 +1,8 @@
 <app-navigation>
-  <div fxLayout="row wrap">
+
+  <div class="background-sky hero parallax"></div>
+
+  <!-- <div fxLayout="row wrap">
     {{ usingBrowser }}
   </div>
 
@@ -13,5 +16,74 @@
     <div class="card" fxFlex="30" fxFlex.lg="30" fxFlex.md="30" fxFlex.sm="100" fxFlex.xs="100">
       <mat-card>Simple card3</mat-card>
     </div>
-  </div>
+  </div> -->
+
+
+  <!-- <section *ngFor="let image of images; let idx = index; let even = even" #section>
+    <img appLazyLoad [src]="image" />
+    <button mat-fab *ngIf="hasNextSection(idx)"
+      (click)="scrollNextSectionIntoView(idx)"
+      [color]="getButtonColor(even)">
+      <mat-icon>keyboard_arrow_down</mat-icon>
+    </button>
+  </section> -->
+
+
+
+  
+  <section #section>
+    <!-- <img appLazyLoad [src]="'//via.placeholder.com/800x800'" />
+      -->
+      <div fxLayout="column" highlight="4-9">
+        <div fxFlex="75px">
+          <div fxLayout="row" style="height: 75px">
+            <div fxFlex="50" fxFlexFill fxLayoutAlign="center center">
+              <mat-card class="top-card">Simple card1</mat-card>
+            </div>
+            <div fxFlex="50" fxFlexFill fxLayoutAlign="center center">
+              <mat-card class="top-card">Simple card1</mat-card>
+            </div>
+          </div>
+        </div>
+    
+        <div fxFlex="75px">
+          <div fxLayout="row" style="height: 75px">
+            <div fxFlex="50" fxFlexFill fxLayoutAlign="center center">
+              <mat-card class="top-card">Simple card1</mat-card>
+            </div>
+            <div fxFlex="50" fxFlexFill fxLayoutAlign="center center">
+              <mat-card class="top-card">Simple card1</mat-card>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <button class="scroll-button-first" mat-fab *ngIf="hasNextSection(0)"
+      (click)="scrollNextSectionIntoView(0)"
+      [color]="getButtonColor(false)">
+      <mat-icon>keyboard_arrow_down</mat-icon>
+    </button>
+  </section>
+
+  <section #section>
+    <button class="scroll-button" mat-fab *ngIf="hasNextSection(1)"
+      (click)="scrollNextSectionIntoView(1)"
+      [color]="getButtonColor(true)">
+      <mat-icon>keyboard_arrow_down</mat-icon>
+    </button>
+  </section>
+
+  <section #section>
+    <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+
+    <a class="github-button" href="https://github.com/naoyamaguchi/how-angular-can-do-today" data-size="large" data-show-count="true" aria-label="Star naoyamaguchi/how-angular-can-do-today on GitHub">Star</a>
+
+    <button class="scroll-button" mat-fab *ngIf="hasNextSection(2)"
+      (click)="scrollNextSectionIntoView(2)"
+      [color]="getButtonColor(false)">
+      <mat-icon>keyboard_arrow_down</mat-icon>
+    </button>
+  </section>
+
+
 </app-navigation>

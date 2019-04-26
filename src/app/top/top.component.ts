@@ -1,14 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, ElementRef, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'app-top',
   templateUrl: './top.component.html',
   styleUrls: ['./top.component.scss']
 })
-export class TopComponent implements OnInit {
+export class TopComponent implements OnInit, AfterViewInit {
   usingBrowser: string;
+  @ViewChildren('section') sections: QueryList<ElementRef>;
 
-  constructor() { }
+  readonly images = [
+    '//via.placeholder.com/800x800',
+    '//via.placeholder.com/700x700',
+    '//via.placeholder.com/600x600',
+    '//via.placeholder.com/500x500',
+    '//via.placeholder.com/400x400'
+  ];
+
+  constructor(
+    private elementRef: ElementRef
+  ) { }
 
   ngOnInit() {
     console.log('platform:', window.navigator.platform);
@@ -47,6 +58,41 @@ export class TopComponent implements OnInit {
       this.usingBrowser = 'Firefox';
     }
 
+  }
+
+  ngAfterViewInit(): void {
+    const s = document.createElement('script');
+    const st = document.createTextNode("!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');");
+    s.appendChild(st);
+    this.elementRef.nativeElement.appendChild(s);
+  }
+
+
+  getButtonColor(even: boolean) {
+    return even ? 'primary' : 'accent';
+  }
+
+  scrollNextSectionIntoView(currentIndex: number) {
+    const nextSection = this.findNextSection(currentIndex);
+    this.scrollElIntoView(nextSection);
+  }
+
+  hasNextSection(currentIndex: number) {
+    return currentIndex < this.images.length - 1;
+  }
+
+  private findNextSection(currentIndex: number): HTMLElement {
+    const nextIndex = currentIndex + 1;
+    const sectionNativeEls = this.getSectionsNativeElements();
+    return sectionNativeEls[nextIndex];
+  }
+
+  private getSectionsNativeElements() {
+    return this.sections.toArray().map(el => el.nativeElement);
+  }
+
+  private scrollElIntoView(el: HTMLElement) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'end' });
   }
 
 }

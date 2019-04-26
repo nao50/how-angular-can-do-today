@@ -37,6 +37,8 @@ export class FileComponent implements OnInit {
   addPreview(discription: string, filehandle: any, filename: string) {
     const componentRef = this.viewContainerRef.createComponent(this.factory);
 
+    console.log('filehandle: ', filehandle);
+
     componentRef.instance.filehandle = filehandle;
     componentRef.instance.discription = discription;
     componentRef.instance.filename = filename;
