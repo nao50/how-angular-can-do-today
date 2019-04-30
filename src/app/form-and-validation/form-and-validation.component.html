@@ -53,7 +53,7 @@
                           <mat-form-field class="product-form" fxFlex="50" fxFlex.xs="100">
                             <input #stateInput matInput type="text" placeholder="Product" aria-label="Number" formControlName="product" [matAutocomplete]="auto">
                             <!-- stateInput -->
-                            <button mat-button *ngIf="stateInput.value" matSuffix mat-icon-button aria-label="Clear" (click)="delSelectedProduct(i)">
+                            <button mat-button *ngIf="stateInput.value" matSuffix mat-icon-button aria-label="Clear" (click)="delSelectedProduct(index)">
                               <mat-icon>close</mat-icon>
                             </button>
 
