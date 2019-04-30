@@ -6,35 +6,73 @@
   <section #section>
 
     <div class="top-outline" fxLayout="column">
+      <!-- First row -->
       <div fxFlex="180px">
         <div fxLayout="row" style="height: 180px">
           <div fxFlex="100" fxFlexFill fxLayoutAlign="center center">
-            <mat-card class="top-card">Simple card1</mat-card>
+            <mat-card class="top-card">
+              Angular Demo Site
+            </mat-card>
           </div>
         </div>
       </div>
 
-      <div fxFlex="180px">
-        <div fxLayout="row" style="height: 180px">
-          <div fxFlex="50" fxFlexFill fxLayoutAlign="start center">
-            <mat-card class="top-card top-card-line2">Simple card1</mat-card>
+      <!-- second row -->
+      <div fxFlex="240px">
+        <div fxLayout="row" style="height: 240px" fxLayoutAlign="space-between center">
+          <div fxFlex="32" fxFlexFill>
+
+            <mat-card>
+              <mat-card-header class="card-header">
+                <mat-card-title>Camera & Microphone</mat-card-title>
+              </mat-card-header>
+              <mat-list>
+                <mat-list-item class="top-list" routerLink="/camera-microphone">
+                  <mat-icon class="list-icon">
+                    camera_alt
+                  </mat-icon>
+                  Audio & Video 
+                </mat-list-item>
+
+                <mat-list-item></mat-list-item>
+                <mat-list-item></mat-list-item>
+                <mat-list-item></mat-list-item>
+              </mat-list>
+            </mat-card>
           </div>
-          <div fxFlex="50" fxFlexFill fxLayoutAlign="end center">
-            <mat-card class="top-card top-card-line2">Simple card1</mat-card>
+
+          <div fxFlex="32" fxFlexFill>
+            <mat-card>
+              <mat-card-header class="card-header">
+                <mat-card-title>Native Behaviors</mat-card-title>
+              </mat-card-header>
+              <mat-list>
+                <mat-list-item></mat-list-item>
+                <mat-list-item></mat-list-item>
+                <mat-list-item></mat-list-item>
+                <mat-list-item></mat-list-item>
+              </mat-list>
+            </mat-card>
           </div>
+
+          <div fxFlex="32" fxFlexFill>
+            <mat-card>
+              <mat-card-header class="card-header">
+                <mat-card-title>Seamless Experience</mat-card-title>
+              </mat-card-header>
+              <mat-list>
+                <mat-list-item></mat-list-item>
+                <mat-list-item></mat-list-item>
+                <mat-list-item></mat-list-item>
+                <mat-list-item></mat-list-item>
+              </mat-list>
+            </mat-card>
+          </div>
+          
         </div>
       </div>
   
-      <div fxFlex="180px">
-        <div fxLayout="row" style="height: 180px">
-          <div fxFlex="50" fxFlexFill fxLayoutAlign="start center">
-            <mat-card class="top-card top-card-line2">Simple card1</mat-card>
-          </div>
-          <div fxFlex="50" fxFlexFill fxLayoutAlign="end center">
-            <mat-card class="top-card top-card-line2">Simple card1</mat-card>
-          </div>
-        </div>
-      </div>
+
     </div>
 
     <button class="scroll-button-first" mat-fab *ngIf="hasNextSection(0)"
