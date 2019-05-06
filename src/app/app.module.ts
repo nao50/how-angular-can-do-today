@@ -50,15 +50,15 @@ const iconDefault = icon({
 Marker.prototype.options.icon = iconDefault;
 
 // (sentry)
-import * as Raven from 'raven-js';
-Raven.config('https://6e025b377f3945508dfc2b3ef7ca70d3@sentry.io/1436874').install();
-export class RavenErrorHandler implements ErrorHandler {
-  handleError(err: any): void {
-    if (environment.production) {
-      Raven.captureException(err);
-    }
-  }
-}
+// import * as Raven from 'raven-js';
+// Raven.config('https://6e025b377f3945508dfc2b3ef7ca70d3@sentry.io/1436874').install();
+// export class RavenErrorHandler implements ErrorHandler {
+//   handleError(err: any): void {
+//     if (environment.production) {
+//       Raven.captureException(err);
+//     }
+//   }
+// }
 
 // component
 import { CameraAndMicrophoneComponent, SavePictureDialogComponent } from './camera-and-microphone/camera-and-microphone.component';
@@ -77,6 +77,7 @@ import { PreviewComponent } from './file/preview.component';
 import { FileDropDirective } from './directives/file-drop.directive';
 import { FormAndValidationComponent } from './form-and-validation/form-and-validation.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { GooglePhotoComponent } from './google-photo/google-photo.component';
 
 
 @NgModule({
@@ -98,6 +99,7 @@ import { CalendarComponent } from './calendar/calendar.component';
     FileDropDirective,
     FormAndValidationComponent,
     CalendarComponent,
+    GooglePhotoComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -137,7 +139,7 @@ import { CalendarComponent } from './calendar/calendar.component';
     PreviewComponent,
   ],
   providers: [
-    { provide: ErrorHandler, useClass: RavenErrorHandler },
+    // { provide: ErrorHandler, useClass: RavenErrorHandler },
     ɵDomSanitizerImpl,
   ],
   bootstrap: [AppComponent]

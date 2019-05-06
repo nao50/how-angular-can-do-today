@@ -19,10 +19,12 @@ export class CustomValidator {
     // Validation maxQuantity
     public static maxQuantity(formControl: FormControl): ValidationResult {
       // console.log('formControl.parent: ', formControl.parent);
+      // console.log('formControl: ', formControl.controls);
       if (formControl.parent) {
         if (formControl.parent.value) {
           if (formControl.parent.value.product && formControl.parent.value.productNumber) {
             if (formControl.parent.value.product.maxQuantity < formControl.parent.value.productNumber) {
+              console.log('CALLED: ');
               return {'maxQuantityInvalid': true};
             }
           }

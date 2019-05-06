@@ -12,6 +12,7 @@ import { AudioVisualizationComponent } from './audio-visualization/audio-visuali
 import { FileComponent } from './file/file.component';
 import { FormAndValidationComponent } from './form-and-validation/form-and-validation.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { GooglePhotoComponent } from './google-photo/google-photo.component';
 
 const routes: Routes = [
   {
@@ -53,6 +54,10 @@ const routes: Routes = [
   {
     path: 'calendar',
     component: CalendarComponent,
+  },
+  {
+    path: 'googlephoto',
+    component: GooglePhotoComponent,
   },
   {
     path: '**',

@@ -56,10 +56,10 @@ export class FormAndValidationComponent implements OnInit {
     this.productFormGroup = this.formBuilder.group({
       products: this.formBuilder.array([
         this.formBuilder.group({
-          product: [this.product],
+          product: [this.product, CustomValidator.maxQuantity],
           productNumber: [1, [Validators.min(1), CustomValidator.integer, CustomValidator.maxQuantity]],
         })
-      ])
+      ], [CustomValidator.maxQuantity])
     });
   }
 
@@ -150,6 +150,7 @@ export class FormAndValidationComponent implements OnInit {
         arr.push(order.products[i]);
       }
     }
+    console.log('arr: ', arr);
 
     const map2 = new Map;
     this.productsList = [];
@@ -161,7 +162,7 @@ export class FormAndValidationComponent implements OnInit {
       this.push({product: key, productNumber: value});
     }, this.productsList);
 
-    // console.log('this.productsList: ', this.productsList);
+    console.log('this.productsList: ', this.productsList);
     if (!this.formInvalid) {
       this.data = new MatTableDataSource(this.productsList);
     } else {
